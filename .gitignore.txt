@@ -1,0 +1,3 @@
+YandexSpeech/obj/
+.vs/
+bin/
