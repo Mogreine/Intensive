@@ -5,8 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CalculatorAlex"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Голосовой калькулятор" Height="434" Width="716">
     <Grid>
-        
+        <Image Source="background.jpg"/>
+        <Grid Margin="50,10,50,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.18*"/>
+                <RowDefinition Height="0.25*"/>
+                <RowDefinition Height="0.18*"/>
+                <RowDefinition/>
+                <RowDefinition Height="0.5*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Выражение:" TextAlignment="Center" Background="RoyalBlue" Foreground="White" FontSize="23" />
+            <ScrollViewer Grid.Row="1">
+                <TextBlock x:Name="outputSpeech"  TextAlignment="Center" FontSize="23" Background="MidnightBlue" Foreground="White" TextWrapping="Wrap" Opacity="0.75"/>
+            </ScrollViewer>
+            <TextBlock Text="Вычисления:" Grid.Row="2" TextAlignment="Center" Background="RoyalBlue" Foreground="White" FontSize="23"/>
+            <ScrollViewer Grid.Row="3">
+                <TextBlock x:Name="outputCalculation" Grid.Row="3" TextAlignment="Center" FontSize="23" Background="MidnightBlue" Foreground="White" Opacity="0.75" TextWrapping="Wrap" />
+            </ScrollViewer>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Background="DodgerBlue" Opacity="0.75" Grid.ColumnSpan="2"/>
+                <Button x:Name="write" Grid.Row="4" Grid.Column="0" FontSize="23" Width="85" Height="75" BorderThickness="0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="micro.png"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="clear" Grid.Row="4" Grid.Column="1" FontSize="23" Width="85" Height="75" BorderThickness="0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="list.png"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
