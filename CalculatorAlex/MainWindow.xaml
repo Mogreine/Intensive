@@ -7,14 +7,20 @@
         mc:Ignorable="d"
         Title="Голосовой калькулятор" Height="434" Width="716">
     <Window.Resources>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Width" Value="90"/>
+        <Style x:Key="microButton" TargetType="Button">
+            <Setter Property="Height" Value="65"/>
+            <Setter Property="Width" Value="85"/>
             <Setter Property="Margin" Value="0,10,0,10"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="micro.png"/>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
+                    <ControlTemplate>
                         <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
@@ -27,8 +33,51 @@
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <Trigger Property="Button.IsMouseOver" Value="True">
-                    <Setter Property="Button.Height" Value="70"/>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Height" Value="85"/>
+                    <Setter Property="Width" Value="100"/>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="micro1.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="listButton" TargetType="Button">
+            <Setter Property="Height" Value="65"/>
+            <Setter Property="Width" Value="85"/>
+            <Setter Property="Margin" Value="0,10,0,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="list.png"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter x:Name="PART_Content"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Height" Value="85"/>
+                    <Setter Property="Width" Value="100"/>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="list1.png"/>
+                        </Setter.Value>
+                    </Setter>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -43,15 +92,15 @@
                 <RowDefinition/>
                 <RowDefinition Height="0.35*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Background="DodgerBlue" Opacity="0.8"/>
+            <Grid Grid.Row="0" Background="SteelBlue"/>
             <TextBlock Grid.Row="0" Text="Выражение:" TextAlignment="Center" Foreground="White" FontSize="30" />
-            <Grid Grid.Row="1" Background="SteelBlue" Opacity="0.95"/>
+            <Grid Grid.Row="1" Background="DodgerBlue" Opacity="0.75"/>
             <ScrollViewer Grid.Row="1">
                 <TextBlock x:Name="outputSpeech"  TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap"/>
             </ScrollViewer>
-            <Grid Grid.Row="2" Background="DodgerBlue" Opacity="0.75"/>
+            <Grid Grid.Row="2" Background="SteelBlue"/>
             <TextBlock Text="Вычисления:" Grid.Row="2" TextAlignment="Center" Foreground="White" FontSize="30"/>
-            <Grid Grid.Row="3" Background="SteelBlue" Opacity="0.95"/>
+            <Grid Grid.Row="3" Background="DodgerBlue" Opacity="0.75"/>
             <ScrollViewer Grid.Row="3">
                 <TextBlock x:Name="outputCalculation" Grid.Row="3" TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap" />
             </ScrollViewer>
@@ -60,16 +109,9 @@
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Background="DodgerBlue" Opacity="0.75" Grid.ColumnSpan="2"/>
-                <Button x:Name="write" Grid.Row="4" Grid.Column="0" Click="write_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="micro.png"/>
-                    </Button.Background>
-                </Button>
-                <Button x:Name="clear" Grid.Row="4" Grid.Column="1" Click="clear_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="list.png"/>
-                    </Button.Background>
+                <Grid Background="SteelBlue" Grid.ColumnSpan="2"/>
+                <Button x:Name="write" Style="{StaticResource microButton}" Grid.Row="4" Grid.Column="0" Click="write_Click"/>
+                <Button x:Name="clear" Style="{StaticResource listButton}"  Grid.Row="4" Grid.Column="1" Click="clear_Click">
                 </Button>
             </Grid>
         </Grid>
