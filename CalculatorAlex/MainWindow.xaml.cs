@@ -25,6 +25,17 @@ namespace CalculatorAlex
         {
             InitializeComponent();
         }
+        
+        private void write_Click(object sender, RoutedEventArgs e)
+        {
+            outputSpeech.Text += "Дарова";
+            outputCalculation.Text += "Дарова";
+        }
 
+        private void clear_Click(object sender, RoutedEventArgs e)
+        {
+            outputSpeech.Text = "";
+            outputCalculation.Text = "";
+        }
     }
 }
