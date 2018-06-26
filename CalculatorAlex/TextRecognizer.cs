@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 
@@ -9,7 +10,18 @@ namespace CalculatorAlex
 {
     class TextRecognizer
     {
-        static async Task RecoFromMicrophoneAsync()
+        private static string text;
+        public static string GetText()
+        {
+            //Thread thread = new Thread(new ThreadStart(a));
+            RecoFromMicrophoneAsync().Wait();
+            return text;
+        }
+        private static void a()
+        {
+            RecoFromMicrophoneAsync().Wait();
+        }
+        public static async Task RecoFromMicrophoneAsync()
         {
             var subscriptionKey = "9967243d0ffe4d1c99f0a824d1aa5da5";
             var region = "westus";
@@ -19,18 +31,18 @@ namespace CalculatorAlex
             using (var recognizer = factory.CreateSpeechRecognizer("ru-RU"))
             {
                 Console.WriteLine("Say something...");
-                var result = await recognizer.RecognizeAsync();
-
+                var result = await recognizer.RecognizeAsync().ConfigureAwait(false);
                 if (result.RecognitionStatus != RecognitionStatus.Recognized)
                 {
                     Console.WriteLine($"There was an error, status {result.RecognitionStatus.ToString()}, reason {result.RecognitionFailureReason}");
+                    text = "wrong";
                 }
                 else
                 {
                     Console.WriteLine($"We recognized: {result.Text}");
+                    text = result.Text;
                 }
                 Console.WriteLine("Please press a key to continue.");
-                //Console.ReadLine();
             }
         }
     }

@@ -28,8 +28,13 @@ namespace CalculatorAlex
         
         private void write_Click(object sender, RoutedEventArgs e)
         {
-            outputSpeech.Text += "Дарова";
-            outputCalculation.Text += "Дарова";
+            //TextRecognizer.RecoFromMicrophoneAsync().Wait();
+            
+            string text = TextRecognizer.GetText();
+            //text = Converter.ConvertString(text);
+            outputSpeech.Text = text;
+            outputCalculation.Text = text;
+            
         }
 
         private void clear_Click(object sender, RoutedEventArgs e)
