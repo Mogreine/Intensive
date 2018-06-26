@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="Голосовой калькулятор" Height="434" Width="716">
     <Window.Resources>
-        <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="90"/>
+            <Setter Property="Margin" Value="0,10,0,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -17,14 +21,14 @@
                             <ContentPresenter x:Name="PART_Content"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          TextElement.Foreground="{TemplateBinding Foreground}"></ContentPresenter>
+                                          TextElement.Foreground="{TemplateBinding Foreground}"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="Button.IsMouseOver" Value="True">
-                    <Setter Property="Button.Height" Value="60"/>
+                    <Setter Property="Button.Height" Value="70"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -37,34 +41,34 @@
                 <RowDefinition Height="0.4*"/>
                 <RowDefinition Height="0.18*"/>
                 <RowDefinition/>
-                <RowDefinition Height="0.4*"/>
+                <RowDefinition Height="0.35*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="DodgerBlue" Opacity="0.8"/>
-            <TextBlock Grid.Row="0" Text="Выражение:" TextAlignment="Center" Foreground="White" FontSize="23" />
+            <TextBlock Grid.Row="0" Text="Выражение:" TextAlignment="Center" Foreground="White" FontSize="30" />
             <Grid Grid.Row="1" Background="SteelBlue" Opacity="0.95"/>
             <ScrollViewer Grid.Row="1">
-                <TextBlock x:Name="outputSpeech"  TextAlignment="Center" FontSize="23" Foreground="White" TextWrapping="Wrap"/>
+                <TextBlock x:Name="outputSpeech"  TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap"/>
             </ScrollViewer>
             <Grid Grid.Row="2" Background="DodgerBlue" Opacity="0.75"/>
-            <TextBlock Text="Вычисления:" Grid.Row="2" TextAlignment="Center" Foreground="White" FontSize="23"/>
+            <TextBlock Text="Вычисления:" Grid.Row="2" TextAlignment="Center" Foreground="White" FontSize="30"/>
             <Grid Grid.Row="3" Background="SteelBlue" Opacity="0.95"/>
             <ScrollViewer Grid.Row="3">
-                <TextBlock x:Name="outputCalculation" Grid.Row="3" TextAlignment="Center" FontSize="23" Foreground="White" TextWrapping="Wrap" />
+                <TextBlock x:Name="outputCalculation" Grid.Row="3" TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap" />
             </ScrollViewer>
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Background="DodgerBlue" Opacity="0.75" Grid.ColumnSpan="2" Cursor="Hand"/>
-                <Button x:Name="write" Style="{StaticResource buttonStyle}" Grid.Row="4" Grid.Column="0" FontSize="23"  BorderThickness="0" Click="write_Click" Cursor="Hand" Margin="0,5,0,5">
+                <Grid Background="DodgerBlue" Opacity="0.75" Grid.ColumnSpan="2"/>
+                <Button x:Name="write" Grid.Row="4" Grid.Column="0" Click="write_Click">
                     <Button.Background>
-                        <ImageBrush ImageSource="micro.png" Stretch="Uniform"/>
+                        <ImageBrush ImageSource="micro.png"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="clear" Style="{StaticResource buttonStyle}" Grid.Row="4" Grid.Column="1" FontSize="23" BorderThickness="0" Click="clear_Click" Cursor="Hand" Margin="0,5,0,5">
+                <Button x:Name="clear" Grid.Row="4" Grid.Column="1" Click="clear_Click">
                     <Button.Background>
-                        <ImageBrush ImageSource="list.png" Stretch="Uniform"/>
+                        <ImageBrush ImageSource="list.png"/>
                     </Button.Background>
                 </Button>
             </Grid>
