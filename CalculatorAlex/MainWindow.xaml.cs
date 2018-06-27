@@ -31,7 +31,7 @@ namespace CalculatorAlex
         {
             var textRecognizer = new TextRecognizer();
             await textRecognizer.RecoFromMicrophoneAsync("ru-RU");
-            var recognitionResult = textRecognizer.result;
+            var recognitionResult = textRecognizer.Result;
 
             if (recognitionResult == null)
             {
@@ -42,12 +42,16 @@ namespace CalculatorAlex
             var converter = new Converter();
             var equation = converter.ConvertTextToEquation(recognitionResult);
 
-            var result = EquationParser.Parse(equation);
-
-            if (result.HasValue)
+            var result = EquationParser.Steps(equation);
+            
+            if (result != null)
             {
-                OutputSpeech.Text = result.Value.ToString();
-                OutputCalculation.Text = result.Value.ToString();
+                var res = new StringBuilder();
+                foreach (var operation in result)
+                {
+                    res.AppendLine(operation);
+                }
+                OutputCalculation.Text = res.ToString();
             }
             else
             {

@@ -8,7 +8,6 @@ namespace CalculatorAlex
 {
     public class EquationParser
     {
-
         public static List<string> Steps(string expression)
         {
             List<string> output = new List<string>();
