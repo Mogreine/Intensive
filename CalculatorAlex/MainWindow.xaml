@@ -8,8 +8,8 @@
         Title="Голосовой калькулятор" Height="450.697" Width="699.928">
     <Window.Resources>
         <Style x:Key="MicroButton" TargetType="Button">
-            <Setter Property="Height" Value="65"/>
-            <Setter Property="Width" Value="85"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Width" Value="70"/>
             <Setter Property="Margin" Value="0,10,0,10"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -34,8 +34,7 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Height" Value="85"/>
-                    <Setter Property="Width" Value="100"/>
+                    <Setter Property="Width" Value="80"/>
                     <Setter Property="Background">
                         <Setter.Value>
                             <ImageBrush ImageSource="Resources/micro1.png"/>
@@ -45,8 +44,8 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="ListButton" TargetType="Button">
-            <Setter Property="Height" Value="65"/>
-            <Setter Property="Width" Value="85"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Width" Value="70"/>
             <Setter Property="Margin" Value="0,10,0,10"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -71,8 +70,7 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Height" Value="85"/>
-                    <Setter Property="Width" Value="100"/>
+                    <Setter Property="Width" Value="80"/>
                     <Setter Property="Background">
                         <Setter.Value>
                             <ImageBrush ImageSource="Resources/list1.png"/>
@@ -93,13 +91,13 @@
                 <RowDefinition Height="0.35*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="SteelBlue"/>
-            <TextBlock Grid.Row="0" Text="Выражение:" TextAlignment="Center" Foreground="White" FontSize="30" />
+            <TextBlock Grid.Row="0" Text="Выражение:" TextAlignment="Center" Foreground="White" FontSize="26" />
             <Grid Grid.Row="1" Background="DodgerBlue" Opacity="0.75"/>
             <ScrollViewer Grid.Row="1">
                 <TextBlock x:Name="OutputSpeech"  TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap"/>
             </ScrollViewer>
             <Grid Grid.Row="2" Background="SteelBlue"/>
-            <TextBlock Text="Вычисления:" Grid.Row="2" TextAlignment="Center" Foreground="White" FontSize="30"/>
+            <TextBlock Text="Вычисления:" Grid.Row="2" TextAlignment="Center" Foreground="White" FontSize="26"/>
             <Grid Grid.Row="3" Background="DodgerBlue" Opacity="0.75"/>
             <ScrollViewer Grid.Row="3">
                 <TextBlock x:Name="OutputCalculation" Grid.Row="3" TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap" />
