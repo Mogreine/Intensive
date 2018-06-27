@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,21 +27,35 @@ namespace CalculatorAlex
             InitializeComponent();
         }
         
-        private void write_Click(object sender, RoutedEventArgs e)
+        private async void RecordButton(object sender, RoutedEventArgs e)
         {
-            //TextRecognizer.RecoFromMicrophoneAsync().Wait();
-            
-            string text = TextRecognizer.GetText();
-            //text = Converter.ConvertString(text);
-            outputSpeech.Text = text;
-            outputCalculation.Text = text;
+            var textRecognizer = new TextRecognizer();
+            await textRecognizer.RecoFromMicrophoneAsync("ru-RU");
+            var recognitionResult = textRecognizer.result;
+
+            var converter = new Converter();
+            var equation = converter.ConvertTextToEquation(recognitionResult);
+
+            var result = EquationParser.Parse(equation);
+
+            if (result.HasValue)
+            {
+
+                OutputSpeech.Text = result.Value.ToString();
+                OutputCalculation.Text = result.Value.ToString();
+
+            }
+            else
+            {
+                OutputCalculation.Text = "Математическое выражение составлено неправильно";
+            }
             
         }
 
-        private void clear_Click(object sender, RoutedEventArgs e)
+        private void ClearButton(object sender, RoutedEventArgs e)
         {
-            outputSpeech.Text = "";
-            outputCalculation.Text = "";
+            OutputSpeech.Text = "";
+            OutputCalculation.Text = "";
         }
     }
 }

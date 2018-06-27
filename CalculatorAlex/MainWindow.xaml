@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CalculatorAlex"
         mc:Ignorable="d"
-        Title="Голосовой калькулятор" Height="434" Width="716">
+        Title="Голосовой калькулятор" Height="444" Width="716">
     <Window.Resources>
-        <Style x:Key="microButton" TargetType="Button">
+        <Style x:Key="MicroButton" TargetType="Button">
             <Setter Property="Height" Value="65"/>
             <Setter Property="Width" Value="85"/>
             <Setter Property="Margin" Value="0,10,0,10"/>
@@ -15,7 +15,7 @@
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Background">
                 <Setter.Value>
-                    <ImageBrush ImageSource="micro.png"/>
+                    <ImageBrush ImageSource="Resources/micro.png"/>
                 </Setter.Value>
             </Setter>
             <Setter Property="Template">
@@ -38,13 +38,13 @@
                     <Setter Property="Width" Value="100"/>
                     <Setter Property="Background">
                         <Setter.Value>
-                            <ImageBrush ImageSource="micro1.png"/>
+                            <ImageBrush ImageSource="Resources/micro1.png"/>
                         </Setter.Value>
                     </Setter>
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="listButton" TargetType="Button">
+        <Style x:Key="ListButton" TargetType="Button">
             <Setter Property="Height" Value="65"/>
             <Setter Property="Width" Value="85"/>
             <Setter Property="Margin" Value="0,10,0,10"/>
@@ -52,7 +52,7 @@
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Background">
                 <Setter.Value>
-                    <ImageBrush ImageSource="list.png"/>
+                    <ImageBrush ImageSource="Resources/list.png"/>
                 </Setter.Value>
             </Setter>
             <Setter Property="Template">
@@ -75,7 +75,7 @@
                     <Setter Property="Width" Value="100"/>
                     <Setter Property="Background">
                         <Setter.Value>
-                            <ImageBrush ImageSource="list1.png"/>
+                            <ImageBrush ImageSource="Resources/list1.png"/>
                         </Setter.Value>
                     </Setter>
                 </Trigger>
@@ -83,7 +83,7 @@
         </Style>
     </Window.Resources>
     <Grid Background="Black">
-        <Image Source="background.jpg"/>
+        <Image Source="Resources/background.jpg"/>
         <Grid Margin="50,0,50,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.18*"/>
@@ -96,13 +96,13 @@
             <TextBlock Grid.Row="0" Text="Выражение:" TextAlignment="Center" Foreground="White" FontSize="30" />
             <Grid Grid.Row="1" Background="DodgerBlue" Opacity="0.75"/>
             <ScrollViewer Grid.Row="1">
-                <TextBlock x:Name="outputSpeech"  TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap"/>
+                <TextBlock x:Name="OutputSpeech"  TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap"/>
             </ScrollViewer>
             <Grid Grid.Row="2" Background="SteelBlue"/>
             <TextBlock Text="Вычисления:" Grid.Row="2" TextAlignment="Center" Foreground="White" FontSize="30"/>
             <Grid Grid.Row="3" Background="DodgerBlue" Opacity="0.75"/>
             <ScrollViewer Grid.Row="3">
-                <TextBlock x:Name="outputCalculation" Grid.Row="3" TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap" />
+                <TextBlock x:Name="OutputCalculation" Grid.Row="3" TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap" />
             </ScrollViewer>
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
@@ -110,8 +110,8 @@
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Background="SteelBlue" Grid.ColumnSpan="2"/>
-                <Button x:Name="write" Style="{StaticResource microButton}" Grid.Row="4" Grid.Column="0" Click="write_Click"/>
-                <Button x:Name="clear" Style="{StaticResource listButton}"  Grid.Row="4" Grid.Column="1" Click="clear_Click">
+                <Button x:Name="Write" Style="{StaticResource MicroButton}" Grid.Row="4" Grid.Column="0" Click="RecordButton"/>
+                <Button x:Name="Clear" Style="{StaticResource ListButton}"  Grid.Row="4" Grid.Column="1" Click="ClearButton">
                 </Button>
             </Grid>
         </Grid>

@@ -100,9 +100,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converter.cs" />
-    <Compile Include="ExpParser.cs" />
-    <Compile Include="TextRecognizer.cs" />
+    <Compile Include="Source\SpeechParsers\Converter.cs" />
+    <Compile Include="Source\EquationParsers\EquationParser.cs" />
+    <Compile Include="Source\SpeechRecognizer\TextRecognizer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -144,14 +144,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="list.png" />
+    <Resource Include="Resources\list.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="micro.png" />
+    <Resource Include="Resources\micro.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="background.jpg" />
+    <Resource Include="Resources\background.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\list1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\micro1.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.CognitiveServices.Speech.0.4.0\build\net45\Microsoft.CognitiveServices.Speech.targets" Condition="Exists('..\packages\Microsoft.CognitiveServices.Speech.0.4.0\build\net45\Microsoft.CognitiveServices.Speech.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
