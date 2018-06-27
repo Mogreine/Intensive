@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CalculatorAlex"
         mc:Ignorable="d"
-        Title="Голосовой калькулятор" Height="444" Width="716">
+        Title="Голосовой калькулятор" Height="450.697" Width="699.928">
     <Window.Resources>
         <Style x:Key="MicroButton" TargetType="Button">
             <Setter Property="Height" Value="65"/>
@@ -110,9 +110,8 @@
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Background="SteelBlue" Grid.ColumnSpan="2"/>
-                <Button x:Name="Write" Style="{StaticResource MicroButton}" Grid.Row="4" Grid.Column="0" Click="RecordButton"/>
-                <Button x:Name="Clear" Style="{StaticResource ListButton}"  Grid.Row="4" Grid.Column="1" Click="ClearButton">
-                </Button>
+                <Button x:Name="Write" Style="{StaticResource MicroButton}" Grid.Column="0" Click="RecordButton" Margin="106,5,106,0"/>
+                <Button x:Name="Clear" Style="{StaticResource ListButton}" Grid.Column="1" Click="ClearButton" Margin="106,5,106,0"/>
             </Grid>
         </Grid>
     </Grid>
