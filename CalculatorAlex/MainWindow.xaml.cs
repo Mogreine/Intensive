@@ -29,6 +29,7 @@ namespace CalculatorAlex
         
         private async void RecordButton(object sender, RoutedEventArgs e)
         {
+            
             var textRecognizer = new TextRecognizer();
             await textRecognizer.RecoFromMicrophoneAsync("ru-RU");
             var recognitionResult = textRecognizer.Result;
