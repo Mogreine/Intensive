@@ -33,6 +33,12 @@ namespace CalculatorAlex
             await textRecognizer.RecoFromMicrophoneAsync("ru-RU");
             var recognitionResult = textRecognizer.result;
 
+            if (recognitionResult == null)
+            {
+                OutputCalculation.Text = "Не удалось распознать речь.";
+                return;
+            }
+
             var converter = new Converter();
             var equation = converter.ConvertTextToEquation(recognitionResult);
 
@@ -40,10 +46,8 @@ namespace CalculatorAlex
 
             if (result.HasValue)
             {
-
                 OutputSpeech.Text = result.Value.ToString();
                 OutputCalculation.Text = result.Value.ToString();
-
             }
             else
             {

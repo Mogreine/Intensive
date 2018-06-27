@@ -9,42 +9,27 @@ namespace CalculatorAlex
     public class EquationParser
     {
 
-        public static double? Parse(string str)
+        public static List<string> Steps(string expression)
         {
-            var piece = str.Split(' ');
-
-            double ans;
-            if (!Double.TryParse(piece[0], out ans))
+            List<string> output = new List<string>();
+            var parts = expression.Split(' ');
+            double a = double.Parse(parts[0]);
+            for (int i = 1; i < parts.Length - 1; i += 2)
             {
-                return null;
+                string step = a + " " + parts[i] + " " + parts[i + 1] + " = ";
+                double b = double.Parse(parts[i + 1]);
+                if (parts[i] == "+")
+                    a += b;
+                else if (parts[i] == "-")
+                    a -= b;
+                else if (parts[i] == "*")
+                    a *= b;
+                else
+                    a /= b;
+                step += a;
+                output.Add(step);
             }
-
-            for (var i = 1; i < piece.Length; i++)
-            {
-                double operand;
-                if (!Double.TryParse(piece[i].Substring(1), out operand))
-                {
-                    return null;
-                }
-                switch (piece[i][0])
-                {
-                    case '*':
-                        ans *= operand;
-                        break;
-                    case '/':
-                        ans /= operand;
-                        break;
-                    case '-':
-                        ans -= operand;
-                        break;
-                    case '+':
-                        ans += operand;
-                        break;
-                    default:
-                        return null;
-                }
-            }
-            return ans;
+            return output;
         }
     }
 }
