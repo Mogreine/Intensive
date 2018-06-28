@@ -42,7 +42,7 @@ namespace CalculatorAlex
                     continue;
                 if (Char.IsDigit(symbols[i]))
                     flag = false;
-                else if (flag)
+                else if (flag || i == 0)
                 {
                     if (symbols[i + 1] == ' ')
                     {
@@ -56,6 +56,7 @@ namespace CalculatorAlex
 
             }
             str = new string(symbols);
+            str = str.Trim(' ');
             str = str.Replace("  ", " ");
             return str;
         }
