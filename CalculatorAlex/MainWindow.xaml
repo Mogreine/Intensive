@@ -102,14 +102,15 @@
             <ScrollViewer Grid.Row="3">
                 <TextBlock x:Name="OutputCalculation" Grid.Row="3" TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap" />
             </ScrollViewer>
-            <Grid Grid.Row="4">
+            <Grid Grid.Row="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.33*"/>
+                    <ColumnDefinition Width="0.33*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Background="SteelBlue" Grid.ColumnSpan="2"/>
+                <Grid Background="SteelBlue" Grid.ColumnSpan="3"/>
                 <Button x:Name="Write" Style="{StaticResource MicroButton}" Grid.Column="0" Click="RecordButton" Margin="106,5,106,0"/>
-                <Button x:Name="Clear" Style="{StaticResource ListButton}" Grid.Column="1" Click="ClearButton" Margin="106,5,106,0"/>
+                <Button x:Name="Stop" Click="StopButton_Click" Margin="255,0,253,5" Grid.ColumnSpan="2"/>
+                <Button x:Name="Clear" Style="{StaticResource ListButton}" Grid.Column="2" Click="ClearButton" Margin="106,5,106,0"/>
             </Grid>
         </Grid>
     </Grid>
