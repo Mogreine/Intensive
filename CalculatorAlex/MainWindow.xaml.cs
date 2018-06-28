@@ -63,8 +63,30 @@ namespace CalculatorAlex
 
         private void ClearButton(object sender, RoutedEventArgs e)
         {
-            OutputSpeech.Text = "";
             OutputCalculation.Text = "";
+        }
+        
+        private void HideButton(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        
+        private void FullButton(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Normal)
+                this.WindowState = WindowState.Maximized;
+            else if (this.WindowState == WindowState.Maximized)
+                this.WindowState = WindowState.Normal;
+        }
+        
+        private void CloseButton(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MoveEvent(object sender, RoutedEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }

@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CalculatorAlex"
         mc:Ignorable="d"
         Title="Голосовой калькулятор" Height="450.697" Width="699.928"
-         WindowStyle="None"
+        WindowStyle="None"
+        AllowsTransparency="True"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
             <Style x:Key="HideButton" TargetType="Button">
@@ -16,7 +16,7 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background">
                 <Setter.Value>
-                    <ImageBrush ImageSource="Resources/hide.png"/>
+                    <ImageBrush ImageSource="Resources/hide.png"></ImageBrush>
                 </Setter.Value>
             </Setter>
             <Setter Property="Template">
@@ -159,13 +159,13 @@
     </Window.Resources>
     <Grid>
         <Image Source="Resources/background.jpg"/>
-        <Grid Margin="50,0,50,0">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.18*"/>
                 <RowDefinition/>
                 <RowDefinition Height="0.35*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Background="SteelBlue">
+            <Grid Grid.Row="0" Background="SteelBlue" MouseDown="MoveEvent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="0.06*"/>
@@ -179,7 +179,7 @@
             </Grid>
             <Grid Grid.Row="1" Background="RoyalBlue" Opacity="0.75"/>
             <ScrollViewer Grid.Row="1">
-                <TextBlock x:Name="OutputSpeech"  TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap"/>
+                <TextBlock x:Name="OutputCalculation"  TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap"/>
             </ScrollViewer>
             <Grid Grid.Row="2" Background="SteelBlue"> 
                 <Grid.ColumnDefinitions>
