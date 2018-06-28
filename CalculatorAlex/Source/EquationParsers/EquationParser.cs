@@ -13,29 +13,36 @@ namespace CalculatorAlex
         {
             List<string> output = new List<string>();
             var parts = expression.Split(' ');
-            double a = double.Parse(parts[0]);
-            for (int i = 1; i < parts.Length; i++)
+            double a;
+            if (double.TryParse(parts[0], out a))
             {
-                string step = a + " " + parts[i][0] + " " + parts[i].Substring(1) + " = ";
-                double b;
-                if (double.TryParse(parts[i].Substring(1), out b))
+                for (int i = 1; i < parts.Length - 1; i += 2)
                 {
-                    if (parts[i][0] == '+')
-                        a += b;
-                    else if (parts[i][0] == '-')
-                        a -= b;
-                    else if (parts[i][0] == '*')
-                        a *= b;
+                    string step = a + " " + parts[i] + " " + parts[i + 1] + " = ";
+                    double b;
+                    if (double.TryParse(parts[i + 1], out b))
+                    {
+                        if (parts[i] == "+")
+                            a += b;
+                        else if (parts[i] == "-")
+                            a -= b;
+                        else if (parts[i] == "*")
+                            a *= b;
+                        else
+                            a /= b;
+                        step += a;
+                        output.Add(step);
+                    }
                     else
-                        a /= b;
-                    step += a;
-                    output.Add(step);
+                    {
+                        output.Add("Ошибка - " + parts[i + 1] + ".");
+                        break;
+                    }
                 }
-                else
-                {
-                    output.Add("Ошибка - " + parts[i].Substring(1) + ".");
-                    break;
-                }
+            }
+            else
+            {
+                output.Add("Ошибка - " + parts[0] + ".");
             }
             return output;
         }
