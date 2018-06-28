@@ -15,6 +15,7 @@ namespace CalculatorAlex
 
             _operationsDict = new Dictionary<string, string>
             {
+                {"плюс-минус ", "+ -" },
                 {"умножить на", "*"},
                 {"делить на", "/"},
                 {"запятая", "."},
