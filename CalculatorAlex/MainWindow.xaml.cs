@@ -42,6 +42,7 @@ namespace CalculatorAlex
 
         private async void StopButton_Click(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             var res = await rec.Stop();
             var con = new Converter();
             var equation = con.ConvertTextToEquation(res);
@@ -54,6 +55,12 @@ namespace CalculatorAlex
             }
 
             OutputCalculation.Text += steps;
+=======
+            string ans = await rec.Stop();
+            var converter = new Converter();
+            ans = converter.ConvertTextToEquation(ans);
+            OutputCalculation.Text = ans;
+>>>>>>> feature/TASK_17-Andrew
         }
     }
 }

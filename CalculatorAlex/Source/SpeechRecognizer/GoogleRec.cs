@@ -57,6 +57,7 @@ namespace CalculatorAlex
                             RecognitionConfig.Types.AudioEncoding.Linear16,
                             SampleRateHertz = 16000,
                             LanguageCode = _lang,
+                            //SpeechContexts = { new SpeechContext() { Phrases = {"млн", "млрд", "+", "-", "*", "/" } } }
                         },
                         InterimResults = true,
                     }

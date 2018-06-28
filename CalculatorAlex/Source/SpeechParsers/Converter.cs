@@ -8,54 +8,57 @@ namespace CalculatorAlex
 {
     public class Converter
     {
-        private readonly SortedDictionary<string, string> _operationsDict;
-        private readonly SortedDictionary<string, string> _numberDict;
+        private readonly Dictionary<string, string> _operationsDict;
 
         public Converter()
         {
 
-            _operationsDict = new SortedDictionary<string, string>
+            _operationsDict = new Dictionary<string, string>
             {
+                {"плюс-минус ", "+ -" },
                 {"умножить на", "*"},
                 {"делить на", "/"},
-                {"запятая", ","},
-                {"точка", "."}
+                {"запятая", "."},
+                {"точка", "."},
+                {"умножить", "*"},
+                {"делить", "/"},
+                {"плюс", "+"},
+                {"минус", "-"},
+                {"minus", "-"},
+                {"plus", "+"}
             };
 
-            _numberDict = new SortedDictionary<string, string>
-            {
-                {"сто", "100"},
-                {"тысяча", "1000"},
-                {"миллион", "1000000"}
-            };
-        }
-
-        private string TransformNumbers(string str)
-        {
-            foreach (var pair in _numberDict)
-                str.Replace(pair.Key, pair.Value);
-            /*
-            string ans = "";
-            string num1 = "", num2 = "";
-            bool flag = false;
-            for (int i = 0; i < str.Length; ++i)
-            {
-                if (Char.IsDigit(str[i]))
-                {
-                    if (num1)
-                    num1 += str[i];
-                }
-            }
-            */
-            return str;
         }
 
         public string ConvertTextToEquation(string str)
         {
             str = str.ToLower();
             foreach (var pair in _operationsDict)
-                str.Replace(pair.Key, pair.Value);
-            str = TransformNumbers(str);
+                str = str.Replace(pair.Key, pair.Value);
+            char[] symbols = str.ToCharArray();
+            bool flag = false;
+            for (int i = 0; i < symbols.Length; ++i)
+            {
+                if (symbols[i] == ' ')
+                    continue;
+                if (Char.IsDigit(symbols[i]))
+                    flag = false;
+                else if (flag || i == 0)
+                {
+                    if (symbols[i + 1] == ' ')
+                    {
+                        symbols[i + 1] = symbols[i];
+                        symbols[i] = ' ';
+                    }
+                    flag = false;
+                }
+                else
+                    flag = true;
+
+            }
+            str = new string(symbols);
+            str = str.Trim(' ');
+            str = str.Replace("  ", " ");
             return str;
         }
     }
