@@ -83,5 +83,10 @@ namespace CalculatorAlex
         {
             this.Close();
         }
+
+        private void MoveEvent(object sender, RoutedEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }

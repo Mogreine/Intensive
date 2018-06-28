@@ -165,7 +165,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="0.35*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Background="SteelBlue">
+            <Grid Grid.Row="0" Background="SteelBlue" MouseDown="MoveEvent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="0.06*"/>
