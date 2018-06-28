@@ -34,6 +34,29 @@ namespace CalculatorAlex
             str = str.ToLower();
             foreach (var pair in _operationsDict)
                 str.Replace(pair.Key, pair.Value);
+            char[] symbols = str.ToCharArray();
+            bool flag = false;
+            for (int i = 0; i < symbols.Length; ++i)
+            {
+                if (symbols[i] == ' ')
+                    continue;
+                if (Char.IsDigit(symbols[i]))
+                    flag = false;
+                else if (flag)
+                {
+                    if (symbols[i + 1] == ' ')
+                    {
+                        symbols[i + 1] = symbols[i];
+                        symbols[i] = ' ';
+                    }
+                    flag = false;
+                }
+                else
+                    flag = true;
+
+            }
+            str = symbols.ToString();
+            str = str.Trim(' ');
             return str;
         }
     }
