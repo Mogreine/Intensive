@@ -16,7 +16,7 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background">
                 <Setter.Value>
-                    <ImageBrush ImageSource="Resources/hide.png"/>
+                    <ImageBrush ImageSource="Resources/hide.png"></ImageBrush>
                 </Setter.Value>
             </Setter>
             <Setter Property="Template">
