@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Голосовой калькулятор" Height="450.697" Width="699.928"
-         WindowStyle="None"
+        WindowStyle="None"
+        AllowsTransparency="True"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
             <Style x:Key="HideButton" TargetType="Button">
