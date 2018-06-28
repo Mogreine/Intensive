@@ -21,6 +21,7 @@ namespace CalculatorAlex
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool clicked = false;
 
         public MainWindow()
         {
@@ -29,7 +30,18 @@ namespace CalculatorAlex
         
         private async void RecordButton(object sender, RoutedEventArgs e)
         {
-            
+            var brush = new ImageBrush();
+            if (!clicked)
+            {
+                brush.ImageSource = new BitmapImage(new Uri("Resources/micro2.png", UriKind.Relative));
+                clicked = true;
+            }
+            else
+            {
+                brush.ImageSource = new BitmapImage(new Uri("Resources/micro1.png", UriKind.Relative));
+                clicked = false;
+            }
+            Record.Background = brush;
             var textRecognizer = new TextRecognizer();
             await textRecognizer.RecoFromMicrophoneAsync("ru-RU");
             var recognitionResult = textRecognizer.Result;
