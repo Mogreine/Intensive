@@ -26,7 +26,7 @@ namespace CalculatorAlex
                             a += b;
                         else if (parts[i] == "-")
                             a -= b;
-                        else if (parts[i] == "*")
+                        else if (parts[i] == "x")
                             a *= b;
                         else
                             a /= b;
