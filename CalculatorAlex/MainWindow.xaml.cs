@@ -31,7 +31,6 @@ namespace CalculatorAlex
         
         private void RecordButton(object sender, RoutedEventArgs e)
         {
-
             rec.Start();
         }
 
