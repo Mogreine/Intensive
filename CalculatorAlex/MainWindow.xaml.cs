@@ -63,7 +63,6 @@ namespace CalculatorAlex
 
         private void ClearButton(object sender, RoutedEventArgs e)
         {
-            OutputSpeech.Text = "";
             OutputCalculation.Text = "";
         }
         

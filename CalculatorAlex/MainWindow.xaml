@@ -179,7 +179,7 @@
             </Grid>
             <Grid Grid.Row="1" Background="RoyalBlue" Opacity="0.75"/>
             <ScrollViewer Grid.Row="1">
-                <TextBlock x:Name="OutputSpeech"  TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap"/>
+                <TextBlock x:Name="OutputCalculation"  TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap"/>
             </ScrollViewer>
             <Grid Grid.Row="2" Background="SteelBlue"> 
                 <Grid.ColumnDefinitions>
