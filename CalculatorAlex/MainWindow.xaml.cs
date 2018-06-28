@@ -26,10 +26,10 @@ namespace CalculatorAlex
         {
             InitializeComponent();
         }
-        
+
         private async void RecordButton(object sender, RoutedEventArgs e)
         {
-            
+
             var textRecognizer = new TextRecognizer();
             await textRecognizer.RecoFromMicrophoneAsync("ru-RU");
             var recognitionResult = textRecognizer.Result;
@@ -44,7 +44,7 @@ namespace CalculatorAlex
             var equation = converter.ConvertTextToEquation(recognitionResult);
 
             var result = EquationParser.Steps(equation);
-            
+
             if (result != null)
             {
                 var res = new StringBuilder();
@@ -58,19 +58,19 @@ namespace CalculatorAlex
             {
                 OutputCalculation.Text = "Математическое выражение составлено неправильно";
             }
-            
+
         }
 
         private void ClearButton(object sender, RoutedEventArgs e)
         {
             OutputCalculation.Text = "";
         }
-        
+
         private void HideButton(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         }
-        
+
         private void FullButton(object sender, RoutedEventArgs e)
         {
             if (this.WindowState == WindowState.Normal)
@@ -78,10 +78,15 @@ namespace CalculatorAlex
             else if (this.WindowState == WindowState.Maximized)
                 this.WindowState = WindowState.Normal;
         }
-        
+
         private void CloseButton(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void MouseEvent(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }
