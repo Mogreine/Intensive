@@ -30,15 +30,13 @@ namespace CalculatorAlex
 
         public GoogleRec(string lang)
         {
-            _credential = GoogleCredential.FromFile(@"C:\123\g.json")
-                .CreateScoped(SpeechClient.DefaultScopes);
-            _channel = new Channel(
-                SpeechClient.DefaultEndpoint.ToString(),
-                _credential.ToChannelCredentials());
+            _credential = GoogleCredential.FromFile(@"..\..\..\Resources\g.json").CreateScoped(SpeechClient.DefaultScopes);
+            _channel = new Channel(SpeechClient.DefaultEndpoint.ToString(), _credential.ToChannelCredentials());
 
             _lang = lang;
             writeLock = new object();
         }
+
         public async void Start()
         {
             speech = SpeechClient.Create(_channel);
@@ -80,6 +78,7 @@ namespace CalculatorAlex
             waveIn.StartRecording();
             Console.WriteLine("Speak now.");
         }
+
         public async Task<string> Stop()
         {
             Task<string> printResponses = Task.Run(async () =>
@@ -88,14 +87,7 @@ namespace CalculatorAlex
                 while (await streamingCall.ResponseStream.MoveNext(
                     default(CancellationToken)))
                 {
-                    foreach (var result in streamingCall.ResponseStream
-                        .Current.Results)
-                    {
-                        foreach (var alternative in result.Alternatives)
-                        {
-                            res += alternative.Transcript + "\n";
-                        }
-                    }
+                    res = streamingCall.ResponseStream.Current.Results.Last().Alternatives.Last().Transcript;
                 }
                 return res;
             });
@@ -103,12 +95,9 @@ namespace CalculatorAlex
             waveIn.StopRecording();
             lock (writeLock) _writeMore = false;
             await streamingCall.WriteCompleteAsync();
-            return TextResult = await printResponses;
+            var TextResult = await printResponses;
+            return TextResult;
         }
-        /*
-        public async Task<string> StreamingMicRecognizeAsync(int seconds)
-        { 
-        }
-        */
+
     }
 }
