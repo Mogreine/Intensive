@@ -14,7 +14,7 @@ using Grpc.Core;
 using NAudio.Wave;
 using System.Windows.Controls;
 
-namespace YandexSpeech
+namespace CalculatorAlex
 {
     class GoogleRec
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,49 +22,28 @@ namespace CalculatorAlex
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        GoogleRec rec;
         public MainWindow()
         {
             InitializeComponent();
+            rec = new GoogleRec("ru-RU");
         }
         
-        private async void RecordButton(object sender, RoutedEventArgs e)
+        private void RecordButton(object sender, RoutedEventArgs e)
         {
-            var textRecognizer = new TextRecognizer();
-            await textRecognizer.RecoFromMicrophoneAsync("ru-RU");
-            var recognitionResult = textRecognizer.Result;
 
-            if (recognitionResult == null)
-            {
-                OutputCalculation.Text = "Не удалось распознать речь.";
-                return;
-            }
-
-            var converter = new Converter();
-            var equation = converter.ConvertTextToEquation(recognitionResult);
-
-            var result = EquationParser.Steps(equation);
-            
-            if (result != null)
-            {
-                var res = new StringBuilder();
-                foreach (var operation in result)
-                {
-                    res.AppendLine(operation);
-                }
-                OutputCalculation.Text = res.ToString();
-            }
-            else
-            {
-                OutputCalculation.Text = "Математическое выражение составлено неправильно";
-            }
-            
+            rec.Start();
         }
 
         private void ClearButton(object sender, RoutedEventArgs e)
         {
             OutputSpeech.Text = "";
             OutputCalculation.Text = "";
+        }
+
+        private async void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            OutputCalculation.Text = await rec.Stop();
         }
     }
 }
