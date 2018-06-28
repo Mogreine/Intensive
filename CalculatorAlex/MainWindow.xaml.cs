@@ -31,7 +31,6 @@ namespace CalculatorAlex
         
         private void RecordButton(object sender, RoutedEventArgs e)
         {
-
             rec.Start();
         }
 
@@ -43,7 +42,18 @@ namespace CalculatorAlex
 
         private async void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            OutputCalculation.Text = await rec.Stop();
+            var res = await rec.Stop();
+            var con = new Converter();
+            var equation = con.ConvertTextToEquation(res);
+            var operations = EquationParser.Steps(equation);
+            var steps = new StringBuilder();
+
+            foreach (var op in operations)
+            {
+                steps.AppendLine(op);
+            }
+
+            OutputCalculation.Text += steps;
         }
     }
 }
