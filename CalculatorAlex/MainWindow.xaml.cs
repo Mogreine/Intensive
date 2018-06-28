@@ -43,7 +43,10 @@ namespace CalculatorAlex
 
         private async void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            OutputCalculation.Text = await rec.Stop();
+            string ans = await rec.Stop();
+            var converter = new Converter();
+            ans = converter.ConvertTextToEquation(ans);
+            OutputCalculation.Text = ans;
         }
     }
 }

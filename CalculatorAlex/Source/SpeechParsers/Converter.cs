@@ -33,7 +33,7 @@ namespace CalculatorAlex
         {
             str = str.ToLower();
             foreach (var pair in _operationsDict)
-                str.Replace(pair.Key, pair.Value);
+                str = str.Replace(pair.Key, pair.Value);
             char[] symbols = str.ToCharArray();
             bool flag = false;
             for (int i = 0; i < symbols.Length; ++i)
@@ -55,8 +55,8 @@ namespace CalculatorAlex
                     flag = true;
 
             }
-            str = symbols.ToString();
-            str = str.Trim(' ');
+            str = new string(symbols);
+            str = str.Replace("  ", " ");
             return str;
         }
     }
