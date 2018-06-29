@@ -11,14 +11,14 @@ namespace CalculatorAlex
 
         public static List<string> Steps(string expression)
         {
-            List<string> output = new List<string>();
+            var output = new List<string>();
             var parts = expression.Split(' ');
             double a;
             if (double.TryParse(parts[0], out a))
             {
-                for (int i = 1; i < parts.Length - 1; i += 2)
+                for (var i = 1; i < parts.Length - 1; i += 2)
                 {
-                    string step = a + " " + parts[i] + " " + parts[i + 1] + " = ";
+                    var step = a + " " + parts[i] + " " + parts[i + 1] + " = ";
                     double b;
                     if (double.TryParse(parts[i + 1], out b))
                     {
@@ -29,20 +29,25 @@ namespace CalculatorAlex
                         else if (parts[i] == "x")
                             a *= b;
                         else
+                        {
                             a /= b;
+                            a = Math.Round(a, 3);
+                        }
                         step += a;
                         output.Add(step);
                     }
                     else
                     {
-                        output.Add("Ошибка - " + parts[i + 1] + ".");
+                        output.Clear();
+                        output.Add($"В выражении {expression} содержится ошибка");
                         break;
                     }
                 }
             }
             else
             {
-                output.Add("Ошибка - " + parts[0] + ".");
+                output.Clear();
+                output.Add($"В выражении {expression} содержится ошибка");
             }
             return output;
         }

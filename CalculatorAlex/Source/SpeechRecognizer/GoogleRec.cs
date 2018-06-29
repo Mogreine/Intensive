@@ -41,9 +41,11 @@ namespace CalculatorAlex
         {
             speech = SpeechClient.Create(_channel);
             _writeMore = true;
-            waveIn = new WaveInEvent();
-            waveIn.DeviceNumber = 0;
-            waveIn.WaveFormat = new WaveFormat(16000, 1);
+            waveIn = new WaveInEvent
+            {
+                DeviceNumber = 0,
+                WaveFormat = new WaveFormat(16000, 1)
+            };
             lock (writeLock) _writeMore = true;
             streamingCall = speech.StreamingRecognize();
             await streamingCall.WriteAsync(
