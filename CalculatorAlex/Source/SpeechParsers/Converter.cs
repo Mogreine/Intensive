@@ -48,13 +48,13 @@ namespace CalculatorAlex
         private string TransformBigNumbers(string str)
         {
             var pieces = str.Split(' ').ToList();
-            for (int i = 0; i < pieces.Count; ++i)
+            for (var i = 0; i < pieces.Count; ++i)
             {
                 if (_bigNumberDict.ContainsKey(pieces[i]))
                 {
-                    double t = _bigNumberDict[pieces[i]];
+                    var t = _bigNumberDict[pieces[i]];
 
-                    double value = 0;
+                    double value;
                     if (i != 0 && DoubleParser.TryParse(pieces[i - 1], out value))
                     {
                         t *= value;
@@ -66,7 +66,7 @@ namespace CalculatorAlex
 
             for (int i = 1; i < pieces.Count; ++i)
             {
-                double value = 0, value2 = 0;
+                double value, value2;
                 if (DoubleParser.TryParse(pieces[i - 1], out value) && DoubleParser.TryParse(pieces[i], out value2))
                 {
                     value2 += value;
@@ -84,17 +84,16 @@ namespace CalculatorAlex
             }
             return sb.ToString().Trim(' ');
         }
+
         public string ConvertTextToEquation(string str)
         {
-            
-
             str = str.ToLower();
             foreach (var pair in _operationsDict)
                 str = str.Replace(pair.Key, pair.Value);
             str = TransformBigNumbers(str);
-            char[] symbols = str.ToCharArray();
-            bool flag = false;
-            for (int i = 0; i < symbols.Length; ++i)
+            var symbols = str.ToCharArray();
+            var flag = false;
+            for (var i = 0; i < symbols.Length; ++i)
             {
                 if (symbols[i] == ' ')
                     continue;
