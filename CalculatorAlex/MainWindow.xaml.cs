@@ -102,5 +102,10 @@ namespace CalculatorAlex
 
             OutputCalculation.Text += steps;
         }
+
+        private void ComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
