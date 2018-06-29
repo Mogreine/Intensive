@@ -38,7 +38,7 @@ namespace CalculatorAlex
             }
             else
             {
-                brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro1.png", UriKind.Relative));
+                brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro.png", UriKind.Relative));
                 clicked = false;
             }
             Record.Background = brush;
