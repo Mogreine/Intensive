@@ -33,12 +33,12 @@ namespace CalculatorAlex
             var brush = new ImageBrush();
             if (!clicked)
             {
-                brush.ImageSource = new BitmapImage(new Uri("Resources/micro2.png", UriKind.Relative));
+                brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro2.png", UriKind.Relative));
                 clicked = true;
             }
             else
             {
-                brush.ImageSource = new BitmapImage(new Uri("Resources/micro1.png", UriKind.Relative));
+                brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro1.png", UriKind.Relative));
                 clicked = false;
             }
             Record.Background = brush;
