@@ -199,8 +199,8 @@
             </ScrollViewer>
             <Grid Grid.Row="2" Background="SteelBlue"> 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.33*"/>
+                    <ColumnDefinition Width="0.33*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Background="SteelBlue" Grid.ColumnSpan="2"/>
                 <Button x:Name="Record" Style="{StaticResource MicroButton}" Grid.Column="0" Click="RecordButton" Margin="106,5,106,0"/>

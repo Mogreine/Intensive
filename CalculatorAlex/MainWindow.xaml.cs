@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,60 +22,36 @@ namespace CalculatorAlex
     /// </summary>
     public partial class MainWindow : Window
     {
-        bool clicked = false;
+        private GoogleRec rec;
+        private bool clicked;
+        private string lastResult;
 
         public MainWindow()
         {
+            rec = new GoogleRec("ru-RU");
             InitializeComponent();
         }
         
-        private async void RecordButton(object sender, RoutedEventArgs e)
+        private void RecordButton(object sender, RoutedEventArgs e)
         {
             var brush = new ImageBrush();
             if (!clicked)
             {
+                rec.Start();
                 brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro2.png", UriKind.Relative));
                 clicked = true;
             }
             else
             {
+                StopRecording();
                 brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro.png", UriKind.Relative));
                 clicked = false;
             }
-            Record.Background = brush;
-            var textRecognizer = new TextRecognizer();
-            await textRecognizer.RecoFromMicrophoneAsync("ru-RU");
-            var recognitionResult = textRecognizer.Result;
-
-            if (recognitionResult == null)
-            {
-                OutputCalculation.Text = "Не удалось распознать речь.";
-                return;
-            }
-
-            var converter = new Converter();
-            var equation = converter.ConvertTextToEquation(recognitionResult);
-
-            var result = EquationParser.Steps(equation);
-            
-            if (result != null)
-            {
-                var res = new StringBuilder();
-                foreach (var operation in result)
-                {
-                    res.AppendLine(operation);
-                }
-                OutputCalculation.Text = res.ToString();
-            }
-            else
-            {
-                OutputCalculation.Text = "Математическое выражение составлено неправильно";
-            }
-            
         }
 
         private void ClearButton(object sender, RoutedEventArgs e)
         {
+            lastResult = null;
             OutputCalculation.Text = "";
         }
         
@@ -99,6 +76,30 @@ namespace CalculatorAlex
         private void MoveEvent(object sender, RoutedEventArgs e)
         {
             this.DragMove();
+        }
+
+        private async void StopRecording()
+        {
+            var res = await rec.Stop();
+            var con = new Converter();
+
+            if (lastResult != null)
+            {
+                res = res.Insert(0, lastResult);
+            }
+
+            var equation = con.ConvertTextToEquation(res);
+            var operations = EquationParser.Steps(equation);
+            var steps = new StringBuilder();
+
+            foreach (var op in operations)
+            {
+                steps.AppendLine(op);
+            }
+
+            lastResult = operations.Last().Split().Last() + " ";
+
+            OutputCalculation.Text += steps;
         }
     }
 }

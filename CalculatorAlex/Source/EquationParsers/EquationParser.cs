@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,31 +12,43 @@ namespace CalculatorAlex
 
         public static List<string> Steps(string expression)
         {
-            List<string> output = new List<string>();
+            var output = new List<string>();
             var parts = expression.Split(' ');
-            double a = double.Parse(parts[0]);
-            for (int i = 1; i < parts.Length; i++)
+            double a;
+            if (DoubleParser.TryParse(parts[0], out a))
             {
-                string step = a + " " + parts[i][0] + " " + parts[i].Substring(1) + " = ";
-                double b;
-                if (double.TryParse(parts[i].Substring(1), out b))
+                for (var i = 1; i < parts.Length - 1; i += 2)
                 {
-                    if (parts[i][0] == '+')
-                        a += b;
-                    else if (parts[i][0] == '-')
-                        a -= b;
-                    else if (parts[i][0] == '*')
-                        a *= b;
+                    var step = a + " " + parts[i].Replace(",", ".") + " " + parts[i + 1].Replace(",", ".") + " = ";
+                    double b;
+                    if (DoubleParser.TryParse(parts[i + 1], out b))
+                    {
+                        if (parts[i] == "+")
+                            a += b;
+                        else if (parts[i] == "-")
+                            a -= b;
+                        else if (parts[i] == "*")
+                            a *= b;
+                        else
+                        {
+                            a /= b;
+                            a = Math.Round(a, 3);
+                        }
+                        step += a;
+                        output.Add(step);
+                    }
                     else
-                        a /= b;
-                    step += a;
-                    output.Add(step);
+                    {
+                        output.Clear();
+                        output.Add($"В выражении {expression} содержится ошибка");
+                        break;
+                    }
                 }
-                else
-                {
-                    output.Add("Ошибка - " + parts[i].Substring(1) + ".");
-                    break;
-                }
+            }
+            else
+            {
+                output.Clear();
+                output.Add($"В выражении {expression} содержится ошибка");
             }
             return output;
         }
