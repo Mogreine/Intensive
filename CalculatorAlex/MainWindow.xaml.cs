@@ -39,16 +39,15 @@ namespace CalculatorAlex
             {
                 rec.Start();
                 brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro2.png", UriKind.Relative));
-                Record.Background = brush;
                 clicked = true;
             }
             else
             {
                 StopRecording();
                 brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro.png", UriKind.Relative));
-                Record.Background = brush;
                 clicked = false;
             }
+            Record.Background = brush;
         }
 
         private void ClearButton(object sender, RoutedEventArgs e)
