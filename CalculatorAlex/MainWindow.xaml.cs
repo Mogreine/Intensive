@@ -82,7 +82,7 @@ namespace CalculatorAlex
         private async void StopRecording()
         {
             var res = await rec.Stop();
-            var con = new Converter();
+            var con = new Converter("ru-RU");
 
             if (lastResult != null)
             {

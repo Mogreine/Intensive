@@ -11,39 +11,22 @@ namespace CalculatorAlex
         private readonly Dictionary<string, string> _operationsDict;
         private readonly Dictionary<string, double> _bigNumberDict;
 
-        public Converter()
+        public Converter(string lang)
         {
-
-            _operationsDict = new Dictionary<string, string>
+            switch (lang)
             {
-                {"x", "*" },
-                {"х", "*" },
-                {"плюс-минус ", "+ -" },
-                {"умножить на", "*"},
-                {"разделить на", "/"},
-                {"делить на", "/"},
-                {"запятая", "."},
-                {"точка", "."},
-                {"умножить", "*"},
-                {"делить", "/"},
-                {"плюс", "+"},
-                {"минус", "-"},
-                {"minus", "-"},
-                {"plus", "+"},
-                {",", "."}
-            };
+                case "ru-RU":
+                    _operationsDict = ReplaceableWords.OperationsRU;
+                    _bigNumberDict = ReplaceableWords.BigNumbRU;
+                    break;
+                case "en-US":
+                    _operationsDict = ReplaceableWords.OperationsEN;
+                    _bigNumberDict = ReplaceableWords.BigNumbEN;
+                    break;
+                default:
+                    break;
+            }
 
-            _bigNumberDict = new Dictionary<string, double>
-            {
-                {"млн", 1000000},
-                {"миллионов", 1000000},
-                {"миллион", 1000000},
-                {"миллиона", 1000000},
-                {"миллиард", 1000000000},
-                {"миллиарда", 1000000000},
-                {"миллиардов", 1000000000},
-                {"млрд", 1000000000}
-            };
         }
         private string TransformBigNumbers(string str)
         {
