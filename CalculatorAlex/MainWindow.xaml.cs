@@ -25,6 +25,7 @@ namespace CalculatorAlex
         private GoogleRec rec;
         private bool clicked;
         private string lastResult;
+        private string language = "rus";
 
         public MainWindow()
         {
@@ -101,6 +102,14 @@ namespace CalculatorAlex
             lastResult = operations.Last().Split().Last() + " ";
 
             OutputCalculation.Text += steps;
+        }
+
+        private void ChangeLanguage(object sender, RoutedEventArgs e)
+        {
+            if (language == "rus")
+                language = "eng";
+            else
+                language = "rus";
         }
     }
 }

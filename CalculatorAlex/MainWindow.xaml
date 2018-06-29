@@ -9,7 +9,76 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
-            <Style x:Key="HideButton" TargetType="Button">
+        <Style x:Key="CheckBoxStyle" TargetType="{x:Type CheckBox}">
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="OnChecking">
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="41"/>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="OnUnchecking">
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <ThicknessAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                                    <SplineThicknessKeyFrame KeyTime="00:00:00.3000000" Value="1,1,1,1"/>
+                                </ThicknessAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+
+                        <DockPanel x:Name="dockPanel">
+                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" ContentTemplate="{TemplateBinding ContentTemplate}" RecognizesAccessKey="True" VerticalAlignment="Center"/>
+                            <Grid Margin="5,5,0,5" Width="82" Height="35" Background="Teal">
+                                <TextBlock Text="ENG" Foreground="White" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,3,0"/>
+                                <TextBlock Text="РУС" Foreground="White" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3,0,0,0"/>
+                                <Border HorizontalAlignment="Left" x:Name="slider" Width="38" BorderThickness="1,1,1,1" CornerRadius="3,3,3,3" RenderTransformOrigin="0.5,0.5" Margin="1,1,1,1">
+                                    <Border.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                            <SkewTransform AngleX="0" AngleY="0"/>
+                                            <RotateTransform Angle="0"/>
+                                            <TranslateTransform X="0" Y="0"/>
+                                        </TransformGroup>
+                                    </Border.RenderTransform>
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                                            <GradientStop Color="#FF4490FF" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.BorderBrush>
+                                    <Border.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="DeepSkyBlue" Offset="1"/>
+                                            <GradientStop Color="RoyalBlue" Offset="0"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
+                            </Grid>
+                        </DockPanel>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource OnUnchecking}" x:Name="OnUnchecking_BeginStoryboard"/>
+                                </Trigger.ExitActions>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource OnChecking}" x:Name="OnChecking_BeginStoryboard"/>
+                                </Trigger.EnterActions>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="HideButton" TargetType="Button">
             <Setter Property="Width" Value="30"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -183,15 +252,17 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="SteelBlue" MouseDown="MoveEvent">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.25*"/>
                     <ColumnDefinition />
-                    <ColumnDefinition Width="0.06*"/>
-                    <ColumnDefinition Width="0.06*"/>
-                    <ColumnDefinition Width="0.06*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Вычисления" Foreground="White" FontSize="26" Margin="70,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Button x:Name="Hide" Style="{StaticResource HideButton}" Grid.Column="1" Click="HideButton" />
-                <Button x:Name="Full" Style="{StaticResource FullButton}" Grid.Column="2" Click="FullButton"/>
-                <Button x:Name="Close"  Style="{StaticResource CloseButton}" Grid.Column="3" Click="CloseButton"/>
+                <CheckBox HorizontalAlignment="Center" Style="{DynamicResource CheckBoxStyle}" Checked="ChangeLanguage"/>
+                <TextBlock Grid.Column="1" Text="Вычисления" Foreground="White" FontSize="26" Margin="70,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Button x:Name="Hide" Style="{StaticResource HideButton}" Grid.Column="2" Click="HideButton" />
+                <Button x:Name="Full" Style="{StaticResource FullButton}" Grid.Column="3" Click="FullButton"/>
+                <Button x:Name="Close"  Style="{StaticResource CloseButton}" Grid.Column="4" Click="CloseButton"/>
             </Grid>
             <Grid Grid.Row="1" Background="RoyalBlue" Opacity="0.75"/>
             <ScrollViewer Grid.Row="1">
