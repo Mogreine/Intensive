@@ -86,7 +86,10 @@ namespace CalculatorAlex
 
             if (lastResult != null)
             {
-                res = res.Insert(0, lastResult);
+                if (Char.IsDigit(res[0]))
+                    res = res.Insert(0, lastResult + " + ");
+                else
+                    res = res.Insert(0, lastResult);
             }
 
             var equation = con.ConvertTextToEquation(res);
