@@ -28,8 +28,8 @@ namespace CalculatorAlex
 
         public MainWindow()
         {
-            InitializeComponent();
             rec = new GoogleRec("ru-RU");
+            InitializeComponent();
         }
         
         private void RecordButton(object sender, RoutedEventArgs e)
