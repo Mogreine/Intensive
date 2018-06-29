@@ -46,6 +46,11 @@ namespace CalculatorAlex
             {
                 output.Add("Выражение " + expression + " составлено неправильно.");
             }
+
+            if (output.Count == 0)
+            {
+                output.Add(a.ToString());
+            }
             return output;
         }
     }
