@@ -15,13 +15,13 @@ namespace CalculatorAlex
             var output = new List<string>();
             var parts = expression.Split(' ');
             double a;
-            if (Double.TryParse(parts[0], out a))
+            if (DoubleParser.TryParse(parts[0], out a))
             {
                 for (var i = 1; i < parts.Length - 1; i += 2)
                 {
-                    var step = a + " " + parts[i] + " " + parts[i + 1] + " = ";
+                    var step = a.ToString() + " " + parts[i] + " " + parts[i + 1] + " = ";
                     double b, c;
-                    if (Double.TryParse(parts[i + 1], out b) && !Double.TryParse(parts[i], out c))
+                    if (DoubleParser.TryParse(parts[i + 1], out b) && !DoubleParser.TryParse(parts[i], out c))
                     {
                         if (parts[i] == "+")
                             a += b;

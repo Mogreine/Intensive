@@ -11,7 +11,7 @@ namespace CalculatorAlex
     {
         public static bool TryParse(string str, out double num)
         {
-            return double.TryParse(str, NumberStyles.Any, CultureInfo.InvariantCulture, out num);
+            return double.TryParse(str, NumberStyles.Any, CultureInfo.CreateSpecificCulture("en-US"), out num); // CultureInfo.InvariantCulture
         }
     }
 }
