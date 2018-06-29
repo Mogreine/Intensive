@@ -19,7 +19,7 @@ namespace CalculatorAlex
             {
                 for (var i = 1; i < parts.Length - 1; i += 2)
                 {
-                    var step = a + " " + parts[i] + " " + parts[i + 1] + " = ";
+                    var step = a + " " + parts[i].Replace(",", ".") + " " + parts[i + 1].Replace(",", ".") + " = ";
                     double b;
                     if (DoubleParser.TryParse(parts[i + 1], out b))
                     {
