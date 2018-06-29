@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,13 +15,13 @@ namespace CalculatorAlex
             var output = new List<string>();
             var parts = expression.Split(' ');
             double a;
-            if (double.TryParse(parts[0], out a))
+            if (DoubleParser.TryParse(parts[0], out a))
             {
                 for (var i = 1; i < parts.Length - 1; i += 2)
                 {
                     var step = a + " " + parts[i] + " " + parts[i + 1] + " = ";
                     double b;
-                    if (double.TryParse(parts[i + 1], out b))
+                    if (DoubleParser.TryParse(parts[i + 1], out b))
                     {
                         if (parts[i] == "+")
                             a += b;

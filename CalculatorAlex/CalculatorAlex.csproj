@@ -183,6 +183,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Source\NumbersParser\DoubleParser.cs" />
     <Compile Include="Source\SpeechParsers\Converter.cs" />
     <Compile Include="Source\EquationParsers\EquationParser.cs" />
     <Compile Include="Source\SpeechRecognizer\GoogleRec.cs" />

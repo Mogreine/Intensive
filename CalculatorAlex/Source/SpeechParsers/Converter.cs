@@ -55,7 +55,7 @@ namespace CalculatorAlex
                     double t = _bigNumberDict[pieces[i]];
 
                     double value = 0;
-                    if (i != 0 && Double.TryParse(pieces[i - 1], out value))
+                    if (i != 0 && DoubleParser.TryParse(pieces[i - 1], out value))
                     {
                         t *= value;
                         pieces[i] = t.ToString();
@@ -67,7 +67,7 @@ namespace CalculatorAlex
             for (int i = 1; i < pieces.Count; ++i)
             {
                 double value = 0, value2 = 0;
-                if (Double.TryParse(pieces[i - 1], out value) && Double.TryParse(pieces[i], out value2))
+                if (DoubleParser.TryParse(pieces[i - 1], out value) && DoubleParser.TryParse(pieces[i], out value2))
                 {
                     value2 += value;
                     pieces[i] = value2.ToString();
