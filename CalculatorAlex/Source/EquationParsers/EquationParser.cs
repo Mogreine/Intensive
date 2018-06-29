@@ -15,13 +15,13 @@ namespace CalculatorAlex
             var output = new List<string>();
             var parts = expression.Split(' ');
             double a;
-            if (DoubleParser.TryParse(parts[0], out a))
+            if (Double.TryParse(parts[0], out a))
             {
                 for (var i = 1; i < parts.Length - 1; i += 2)
                 {
-                    var step = a + " " + parts[i].Replace(",", ".") + " " + parts[i + 1].Replace(",", ".") + " = ";
-                    double b;
-                    if (DoubleParser.TryParse(parts[i + 1], out b))
+                    var step = a + " " + parts[i] + " " + parts[i + 1] + " = ";
+                    double b, c;
+                    if (Double.TryParse(parts[i + 1], out b) && !Double.TryParse(parts[i], out c))
                     {
                         if (parts[i] == "+")
                             a += b;
@@ -30,25 +30,21 @@ namespace CalculatorAlex
                         else if (parts[i] == "*")
                             a *= b;
                         else
-                        {
                             a /= b;
-                            a = Math.Round(a, 3);
-                        }
                         step += a;
                         output.Add(step);
                     }
                     else
                     {
                         output.Clear();
-                        output.Add($"В выражении {expression} содержится ошибка");
+                        output.Add("Выражение " + expression + " составлено неправильно.");
                         break;
                     }
                 }
             }
             else
             {
-                output.Clear();
-                output.Add($"В выражении {expression} содержится ошибка");
+                output.Add("Выражение " + expression + " составлено неправильно.");
             }
             return output;
         }
