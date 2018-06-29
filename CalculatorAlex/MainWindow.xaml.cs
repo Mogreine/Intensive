@@ -32,7 +32,7 @@ namespace CalculatorAlex
             InitializeComponent();
         }
         
-        private void RecordButton(object sender, RoutedEventArgs e)
+        private async void RecordButton(object sender, RoutedEventArgs e)
         {
             var brush = new ImageBrush();
             if (!clicked)
