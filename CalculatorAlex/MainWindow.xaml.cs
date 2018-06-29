@@ -23,6 +23,7 @@ namespace CalculatorAlex
     public partial class MainWindow : Window
     {
         GoogleRec rec;
+
         public MainWindow()
         {
             InitializeComponent();

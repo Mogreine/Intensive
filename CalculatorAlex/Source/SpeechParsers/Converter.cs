@@ -16,6 +16,8 @@ namespace CalculatorAlex
 
             _operationsDict = new Dictionary<string, string>
             {
+                {"x", "*" },
+                {"х", "*" },
                 {"плюс-минус ", "+ -" },
                 {"умножить на", "*"},
                 {"делить на", "/"},
@@ -33,6 +35,12 @@ namespace CalculatorAlex
             _bigNumberDict = new Dictionary<string, double>
             {
                 {"млн", 1000000},
+                {"миллионов", 1000000},
+                {"миллион", 1000000},
+                {"миллиона", 1000000},
+                {"миллиард", 1000000000},
+                {"миллиарда", 1000000000},
+                {"миллиардов", 1000000000},
                 {"млрд", 1000000000}
             };
         }
@@ -77,6 +85,8 @@ namespace CalculatorAlex
         }
         public string ConvertTextToEquation(string str)
         {
+            
+
             str = str.ToLower();
             foreach (var pair in _operationsDict)
                 str = str.Replace(pair.Key, pair.Value);
@@ -107,5 +117,8 @@ namespace CalculatorAlex
             str = str.Replace("  ", " ");
             return str;
         }
+
     }
+
+    
 }
