@@ -102,7 +102,7 @@ namespace CalculatorAlex
                     flag = false;
                 else if (flag || i == 0)
                 {
-                    if (symbols[i + 1] == ' ')
+                    if (i + 1 < symbols.Length && symbols[i + 1] == ' ')
                     {
                         symbols[i + 1] = symbols[i];
                         symbols[i] = ' ';
