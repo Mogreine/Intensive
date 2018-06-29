@@ -22,7 +22,10 @@ namespace CalculatorAlex
     /// </summary>
     public partial class MainWindow : Window
     {
-        GoogleRec rec;
+        private GoogleRec rec;
+        private bool clicked;
+        private string lastResult;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -31,19 +34,34 @@ namespace CalculatorAlex
         
         private void RecordButton(object sender, RoutedEventArgs e)
         {
-            rec.Start();
+            if (!clicked)
+            {
+                rec.Start();
+                clicked = true;
+            }
+            else
+            {
+                StopRecording();
+                clicked = false;
+            }
         }
 
         private void ClearButton(object sender, RoutedEventArgs e)
         {
-            OutputSpeech.Text = "";
+            lastResult = null;
             OutputCalculation.Text = "";
         }
 
-        private async void StopButton_Click(object sender, RoutedEventArgs e)
+        private async void StopRecording()
         {
             var res = await rec.Stop();
             var con = new Converter();
+
+            if (lastResult != null)
+            {
+                res = res.Insert(0, lastResult);
+            }
+
             var equation = con.ConvertTextToEquation(res);
             var operations = EquationParser.Steps(equation);
             var steps = new StringBuilder();
@@ -52,6 +70,8 @@ namespace CalculatorAlex
             {
                 steps.AppendLine(op);
             }
+
+            lastResult = operations.Last().Split().Last() + " ";
 
             OutputCalculation.Text += steps;
         }
