@@ -62,6 +62,10 @@ namespace CalculatorAlex
                         pieces[i] = t.ToString();
                         pieces.RemoveAt(i - 1);
                     }
+                    else
+                    { 
+                        pieces[i] = t.ToString();
+                    }
                 }
             }
 
