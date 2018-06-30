@@ -37,7 +37,7 @@ namespace CalculatorAlex
             var brush = new ImageBrush();
             if (!clicked)
             {
-                rec.Start();
+                await rec.Start();
                 brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro2.png", UriKind.Relative));
                 clicked = true;
             }

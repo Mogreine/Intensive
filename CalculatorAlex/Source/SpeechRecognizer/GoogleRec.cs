@@ -37,7 +37,7 @@ namespace CalculatorAlex
             writeLock = new object();
         }
 
-        public async void Start()
+        public async Task Start()
         {
             speech = SpeechClient.Create(_channel);
             _writeMore = true;

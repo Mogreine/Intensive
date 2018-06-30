@@ -13,7 +13,6 @@ namespace CalculatorAlex
 
         public Converter()
         {
-
             _operationsDict = new Dictionary<string, string>
             {
                 {"x", "*" },
@@ -44,7 +43,9 @@ namespace CalculatorAlex
                 {"миллиардов", 1000000000},
                 {"млрд", 1000000000}
             };
+
         }
+
         private string TransformBigNumbers(string str)
         {
             var pieces = str.Split(' ').ToList();
