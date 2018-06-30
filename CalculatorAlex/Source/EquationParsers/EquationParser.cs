@@ -42,8 +42,8 @@ namespace CalculatorAlex
                     }
                     else
                     {
+                        output.Clear();
                         haveProblem = true;
-                        lastValue = res;
                         output.Add("Выражение " + expression + " составлено неправильно.");
                         break;
                     }
@@ -51,10 +51,12 @@ namespace CalculatorAlex
             }
             else
             {
+                output.Clear();
                 haveProblem = true;
-                lastValue = res;
                 output.Add("Выражение " + expression + " составлено неправильно.");
             }
+
+            lastValue = res;
 
             if (output.Count == 0)
             {
