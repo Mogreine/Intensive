@@ -84,6 +84,12 @@ namespace CalculatorAlex
             var res = await rec.Stop();
             var con = new Converter();
 
+            if (res.Length == 0)
+            {
+                OutputCalculation.Text += "Ничего не удалось распознать\n";
+                return;
+            }
+
             if (lastResult != null)
             {
                 if (Char.IsDigit(res[0]))
