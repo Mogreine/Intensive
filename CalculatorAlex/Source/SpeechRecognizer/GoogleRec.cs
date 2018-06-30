@@ -26,6 +26,7 @@ namespace CalculatorAlex
         private SpeechClient.StreamingRecognizeStream streamingCall;
         private WaveInEvent waveIn;
         private object writeLock;
+
         public string TextResult { get; set; }
 
         public GoogleRec(string lang)
@@ -35,35 +36,49 @@ namespace CalculatorAlex
 
             _lang = lang;
             writeLock = new object();
+
+            NAudioConfiguration();
         }
 
         public async Task Start()
         {
             speech = SpeechClient.Create(_channel);
             _writeMore = true;
+            lock (writeLock) _writeMore = true;
+
+            streamingCall = speech.StreamingRecognize();
+            await streamingCall.WriteAsync(ConfigRequest(_lang));
+
+            waveIn.StartRecording();
+            Console.WriteLine("Speak now.");
+        }
+
+        private StreamingRecognizeRequest ConfigRequest(string lang)
+        {
+            return new StreamingRecognizeRequest()
+            {
+                StreamingConfig = new StreamingRecognitionConfig()
+                {
+                    Config = new RecognitionConfig()
+                    {
+                        Encoding =
+                            RecognitionConfig.Types.AudioEncoding.Linear16,
+                        SampleRateHertz = 16000,
+                        LanguageCode = lang,
+                        //SpeechContexts = { new SpeechContext() { Phrases = {"млн", "млрд", "+", "-", "*", "/" } } }
+                    },
+                    InterimResults = true,
+                }
+            };
+        }
+
+        private void NAudioConfiguration()
+        {
             waveIn = new WaveInEvent
             {
                 DeviceNumber = 0,
                 WaveFormat = new WaveFormat(16000, 1)
             };
-            lock (writeLock) _writeMore = true;
-            streamingCall = speech.StreamingRecognize();
-            await streamingCall.WriteAsync(
-                new StreamingRecognizeRequest()
-                {
-                    StreamingConfig = new StreamingRecognitionConfig()
-                    {
-                        Config = new RecognitionConfig()
-                        {
-                            Encoding =
-                            RecognitionConfig.Types.AudioEncoding.Linear16,
-                            SampleRateHertz = 16000,
-                            LanguageCode = _lang,
-                            //SpeechContexts = { new SpeechContext() { Phrases = {"млн", "млрд", "+", "-", "*", "/" } } }
-                        },
-                        InterimResults = true,
-                    }
-                });
             waveIn.DataAvailable +=
                 (object sender, WaveInEventArgs args) =>
                 {
@@ -78,8 +93,6 @@ namespace CalculatorAlex
                             }).Wait();
                     }
                 };
-            waveIn.StartRecording();
-            Console.WriteLine("Speak now.");
         }
 
         public async Task<string> Stop()
