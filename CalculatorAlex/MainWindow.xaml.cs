@@ -28,7 +28,7 @@ namespace CalculatorAlex
 
         public MainWindow()
         {
-            rec = new GoogleRec("ru-RU");
+            rec = new GoogleRec();
             InitializeComponent();
         }
         
@@ -37,7 +37,7 @@ namespace CalculatorAlex
             var brush = new ImageBrush();
             if (!clicked)
             {
-                rec.Start();
+                await rec.Start("ru-RU");
                 brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro2.png", UriKind.Relative));
                 clicked = true;
             }
@@ -89,7 +89,11 @@ namespace CalculatorAlex
                 if (Char.IsDigit(res[0]))
                     res = res.Insert(0, lastResult + " + ");
                 else
+                {
+                    if (res.Length >= 2 && res[0] == '-' && Char.IsDigit(res[1]))
+                        res = res.Insert(1, " ");
                     res = res.Insert(0, lastResult + " ");
+                }
             }
 
             var equation = con.ConvertTextToEquation(res);
