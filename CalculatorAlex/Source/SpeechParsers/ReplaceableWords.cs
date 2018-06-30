@@ -46,19 +46,17 @@ namespace CalculatorAlex
                 {"х", "*" },
                 {"minus", "-"},
                 {"plus", "+"},
+                {"divide by", "/"},
+                {"multiply by", "*"},
+                {"divide", "/"},
+                {"multiply", "*"},
                 {",", "."}
             };
 
         public static Dictionary<string, double> BigNumbEN = new Dictionary<string, double>
             {
-                {"млн", 1000000},
-                {"миллионов", 1000000},
-                {"миллион", 1000000},
-                {"миллиона", 1000000},
-                {"миллиард", 1000000000},
-                {"миллиарда", 1000000000},
-                {"миллиардов", 1000000000},
-                {"млрд", 1000000000}
+                {"million", 1000000},
+                {"billion", 1000000000}
             };
     }
 }

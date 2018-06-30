@@ -249,7 +249,7 @@
                     <ColumnDefinition Width="0.1*"/>
                     <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox  Height="35" Margin="10,0,0,0" Cursor="Hand" FontSize="12" Foreground="White" SelectionChanged="ComboBoxSelectionChanged">
+                <ComboBox x:Name="CombBoxLang" Height="35" Margin="10,0,0,0" Cursor="Hand" FontSize="12" Foreground="White" SelectionChanged="ComboBoxSelectionChanged">
                     <ComboBoxItem IsSelected="True" Cursor="Hand"> 
                         <StackPanel Orientation="Horizontal" Height="25">
                             <Image Source="Resources/russian.png" Width="22"/>

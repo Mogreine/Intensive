@@ -25,6 +25,7 @@ namespace CalculatorAlex
         private GoogleRec rec;
         private bool clicked;
         private string lastResult;
+        private string lang;
 
         public MainWindow()
         {
@@ -37,7 +38,7 @@ namespace CalculatorAlex
             var brush = new ImageBrush();
             if (!clicked)
             {
-                await rec.Start("ru-RU");
+                await rec.Start(lang);
                 brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro2.png", UriKind.Relative));
                 clicked = true;
             }
@@ -82,7 +83,7 @@ namespace CalculatorAlex
         private async void StopRecording()
         {
             var res = await rec.Stop();
-            var con = new Converter("ru-RU");
+            var con = new Converter(lang);
 
             if (lastResult != null)
             {
@@ -112,7 +113,18 @@ namespace CalculatorAlex
 
         private void ComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            switch (CombBoxLang.SelectedIndex)
+            {
+                case 0:
+                    lang = "ru-RU";
+                    break;
+                case 1:
+                    lang = "en-US";
+                    break;
+                default:
+                    lang = "ru-RU";
+                    break;
+            }
         }
     }
 }
