@@ -98,8 +98,8 @@ namespace CalculatorAlex
             waveIn.StopRecording();
             lock (writeLock) _writeMore = false;
             await streamingCall.WriteCompleteAsync();
-            var TextResult = await printResponses;
-            return TextResult;
+            var textResult = await printResponses;
+            return textResult;
         }
 
     }
