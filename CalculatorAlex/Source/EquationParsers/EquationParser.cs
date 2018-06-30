@@ -14,24 +14,24 @@ namespace CalculatorAlex
         {
             var output = new List<string>();
             var parts = expression.Split(' ');
-            double a;
-            if (Double.TryParse(parts[0], out a))
+            double res;
+            if (DoubleParser.TryParse(parts[0], out res))
             {
                 for (var i = 1; i < parts.Length - 1; i += 2)
                 {
-                    var step = a + " " + parts[i] + " " + parts[i + 1] + " = ";
-                    double b, c;
-                    if (Double.TryParse(parts[i + 1], out b) && !Double.TryParse(parts[i], out c))
+                    var step = res + " " + parts[i] + " " + parts[i + 1] + " = ";
+                    double nextOperand;
+                    if (DoubleParser.TryParse(parts[i + 1], out nextOperand))
                     {
                         if (parts[i] == "+")
-                            a += b;
+                            res += nextOperand;
                         else if (parts[i] == "-")
-                            a -= b;
+                            res -= nextOperand;
                         else if (parts[i] == "*")
-                            a *= b;
+                            res *= nextOperand;
                         else
-                            a /= b;
-                        step += a;
+                            res /= nextOperand;
+                        step += res;
                         output.Add(step);
                     }
                     else
@@ -49,7 +49,7 @@ namespace CalculatorAlex
 
             if (output.Count == 0)
             {
-                output.Add(a.ToString());
+                output.Add(res.ToString(CultureInfo.InvariantCulture));
             }
             return output;
         }

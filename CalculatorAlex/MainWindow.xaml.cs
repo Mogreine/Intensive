@@ -89,7 +89,7 @@ namespace CalculatorAlex
                 if (Char.IsDigit(res[0]))
                     res = res.Insert(0, lastResult + " + ");
                 else
-                    res = res.Insert(0, lastResult);
+                    res = res.Insert(0, lastResult + " ");
             }
 
             var equation = con.ConvertTextToEquation(res);
@@ -101,7 +101,7 @@ namespace CalculatorAlex
                 steps.AppendLine(op);
             }
 
-            lastResult = operations.Last().Split().Last() + " ";
+            lastResult = operations.Last().Split().Last();
 
             OutputCalculation.Text += steps;
         }
