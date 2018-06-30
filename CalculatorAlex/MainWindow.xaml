@@ -18,47 +18,60 @@
                         <ControlTemplate.Resources>
                             <Storyboard x:Key="OnChecking">
                                 <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="41"/>
+                                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="42"/>
                                 </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
                             <Storyboard x:Key="OnUnchecking">
                                 <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
                                     <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
                                 </DoubleAnimationUsingKeyFrames>
-                                <ThicknessAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider" Storyboard.TargetProperty="(FrameworkElement.Margin)">
-                                    <SplineThicknessKeyFrame KeyTime="00:00:00.3000000" Value="1,1,1,1"/>
-                                </ThicknessAnimationUsingKeyFrames>
                             </Storyboard>
                         </ControlTemplate.Resources>
 
                         <DockPanel x:Name="dockPanel">
                             <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" ContentTemplate="{TemplateBinding ContentTemplate}" RecognizesAccessKey="True" VerticalAlignment="Center"/>
-                            <Grid Margin="5,5,0,5" Width="82" Height="35" Background="Teal">
-                                <TextBlock Text="ENG" Foreground="White" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,3,0"/>
-                                <TextBlock Text="РУС" Foreground="White" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3,0,0,0"/>
-                                <Border HorizontalAlignment="Left" x:Name="slider" Width="38" BorderThickness="1,1,1,1" CornerRadius="3,3,3,3" RenderTransformOrigin="0.5,0.5" Margin="1,1,1,1">
-                                    <Border.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
-                                            <SkewTransform AngleX="0" AngleY="0"/>
-                                            <RotateTransform Angle="0"/>
-                                            <TranslateTransform X="0" Y="0"/>
-                                        </TransformGroup>
-                                    </Border.RenderTransform>
-                                    <Border.BorderBrush>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FFFFFFFF" Offset="0"/>
-                                            <GradientStop Color="#FF4490FF" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Border.BorderBrush>
-                                    <Border.Background>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="DeepSkyBlue" Offset="1"/>
-                                            <GradientStop Color="RoyalBlue" Offset="0"/>
-                                        </LinearGradientBrush>
-                                    </Border.Background>
-                                </Border>
-                            </Grid>
+                            <Border BorderThickness="3" Height="39" CornerRadius="3">
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                                        <GradientStop Color="Silver" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.BorderBrush>
+                                <Grid Width="85" Height="36">
+                                    <Border CornerRadius="3">
+                                        <Border.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Color="LightSkyBlue" Offset="1"/>
+                                                <GradientStop Color="SteelBlue" Offset="0"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="ENG" Foreground="White" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,3,0"/>
+                                    <TextBlock Text="РУС" Foreground="White" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3,0,0,0"/>
+                                    <Border HorizontalAlignment="Left" x:Name="slider" Width="39" BorderThickness="1,1,1,1" CornerRadius="3,3,3,3" RenderTransformOrigin="0.5,0.5" Margin="2,1,0,4">
+                                        <Border.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                                <SkewTransform AngleX="0" AngleY="0"/>
+                                                <RotateTransform Angle="0"/>
+                                                <TranslateTransform X="0" Y="0"/>
+                                            </TransformGroup>
+                                        </Border.RenderTransform>
+                                        <Border.BorderBrush>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="DarkTurquoise" Offset="0"/>
+                                                <GradientStop Color="RoyalBlue" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.BorderBrush>
+                                        <Border.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="DeepSkyBlue" Offset="1"/>
+                                                <GradientStop Color="CornflowerBlue" Offset="0"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                    </Border>
+                                </Grid>
+                            </Border>
                         </DockPanel>
 
                         <ControlTemplate.Triggers>
@@ -252,17 +265,15 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="SteelBlue" MouseDown="MoveEvent">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.25*"/>
                     <ColumnDefinition />
-                    <ColumnDefinition Width="0.1*"/>
-                    <ColumnDefinition Width="0.1*"/>
-                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="0.08*"/>
+                    <ColumnDefinition Width="0.08*"/>
+                    <ColumnDefinition Width="0.08*"/>
                 </Grid.ColumnDefinitions>
-                <CheckBox HorizontalAlignment="Center" Style="{DynamicResource CheckBoxStyle}" Checked="ChangeLanguage"/>
-                <TextBlock Grid.Column="1" Text="Вычисления" Foreground="White" FontSize="26" Margin="70,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Button x:Name="Hide" Style="{StaticResource HideButton}" Grid.Column="2" Click="HideButton" />
-                <Button x:Name="Full" Style="{StaticResource FullButton}" Grid.Column="3" Click="FullButton"/>
-                <Button x:Name="Close"  Style="{StaticResource CloseButton}" Grid.Column="4" Click="CloseButton"/>
+                <TextBlock Grid.Column="0" Text="Вычисления" Foreground="White" FontSize="26" Margin="150,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Button x:Name="Hide" Style="{StaticResource HideButton}" Grid.Column="1" Click="HideButton" />
+                <Button x:Name="Full" Style="{StaticResource FullButton}" Grid.Column="2" Click="FullButton"/>
+                <Button x:Name="Close"  Style="{StaticResource CloseButton}" Grid.Column="3" Click="CloseButton"/>
             </Grid>
             <Grid Grid.Row="1" Background="RoyalBlue" Opacity="0.75"/>
             <ScrollViewer Grid.Row="1">
@@ -272,10 +283,12 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.33*"/>
                     <ColumnDefinition Width="0.33*"/>
+                    <ColumnDefinition Width="0.33*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Background="SteelBlue" Grid.ColumnSpan="2"/>
-                <Button x:Name="Record" Style="{StaticResource MicroButton}" Grid.Column="0" Click="RecordButton" Margin="106,5,106,0"/>
-                <Button x:Name="Clear" Style="{StaticResource ListButton}" Grid.Column="1" Click="ClearButton" Margin="106,5,106,0"/>
+                <Button x:Name="Record" Style="{StaticResource MicroButton}" Grid.Column="0" Click="RecordButton" HorizontalAlignment="Right"/>
+                <CheckBox HorizontalAlignment="Center" Style="{DynamicResource CheckBoxStyle}" Grid.Column="1" Cursor="Hand" Checked="ChangeLanguage"/>
+                <Button x:Name="Clear" Style="{StaticResource ListButton}" Grid.Column="2" Click="ClearButton" HorizontalAlignment="Left"/>
             </Grid>
         </Grid>
     </Grid>
