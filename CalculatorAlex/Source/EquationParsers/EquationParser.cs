@@ -19,7 +19,7 @@ namespace CalculatorAlex
             {
                 for (var i = 1; i < parts.Length - 1; i += 2)
                 {
-                    var step = a.ToString() + " " + parts[i] + " " + parts[i + 1] + " = ";
+                    var step = a.ToString(DoubleParser.EngInfo) + " " + parts[i] + " " + parts[i + 1] + " = ";
                     double b, c;
                     if (DoubleParser.TryParse(parts[i + 1], out b) && !DoubleParser.TryParse(parts[i], out c))
                     {
@@ -31,7 +31,7 @@ namespace CalculatorAlex
                             a *= b;
                         else
                             a /= b;
-                        step += a;
+                        step += a.ToString(DoubleParser.EngInfo);
                         output.Add(step);
                     }
                     else
@@ -49,7 +49,7 @@ namespace CalculatorAlex
 
             if (output.Count == 0)
             {
-                output.Add(a.ToString());
+                output.Add(a.ToString(DoubleParser.EngInfo));
             }
             return output;
         }
