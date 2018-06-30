@@ -30,7 +30,10 @@ namespace CalculatorAlex
                         else if (parts[i] == "*")
                             res *= nextOperand;
                         else
+                        {
                             res /= nextOperand;
+                            res = Math.Round(res, 3);
+                        }
                         step += res;
                         output.Add(step);
                     }
