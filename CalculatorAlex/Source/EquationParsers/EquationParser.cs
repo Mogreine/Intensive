@@ -52,7 +52,7 @@ namespace CalculatorAlex
 
             if (output.Count == 0)
             {
-                output.Add(res.ToString(CultureInfo.InvariantCulture));
+                output.Add(res.ToString(DoubleParser.EngInfo));
             }
             return output;
         }
