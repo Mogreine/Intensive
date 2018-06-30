@@ -105,7 +105,7 @@ namespace CalculatorAlex
                 steps.AppendLine(op);
             }
 
-            lastResult = operations.Last().Split().Last();
+            lastResult = EquationParser.LastValue.ToString(DoubleParser.EngInfo);
 
             OutputCalculation.Text += steps;
         }

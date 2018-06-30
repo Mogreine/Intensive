@@ -10,8 +10,8 @@ namespace CalculatorAlex
     public class EquationParser
     {
 
-        public static bool haveProblem;
-        public static double lastValue;
+        public static bool HaveProblem;
+        public static double LastValue;
 
         public static List<string> Steps(string expression)
         {
@@ -43,7 +43,7 @@ namespace CalculatorAlex
                     else
                     {
                         output.Clear();
-                        haveProblem = true;
+                        HaveProblem = true;
                         output.Add("Выражение " + expression + " составлено неправильно.");
                         break;
                     }
@@ -52,11 +52,11 @@ namespace CalculatorAlex
             else
             {
                 output.Clear();
-                haveProblem = true;
+                HaveProblem = true;
                 output.Add("Выражение " + expression + " составлено неправильно.");
             }
 
-            lastValue = res;
+            LastValue = res;
 
             if (output.Count == 0)
             {
