@@ -44,10 +44,10 @@ namespace CalculatorAlex
             {
                 {"x", "*" },
                 {"х", "*" },
+                {"free", "3" },
                 {"minus", "-"},
                 {"plus", "+"},
-                {"divide by", "/"},
-                {"multiply by", "*"},
+                {"divided", "/"},
                 {"divide", "/"},
                 {"multiply", "*"},
                 {",", "."}

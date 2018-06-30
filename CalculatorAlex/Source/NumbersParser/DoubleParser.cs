@@ -9,11 +9,9 @@ namespace CalculatorAlex
 {
     class DoubleParser
     {
-        public static CultureInfo EngInfo = CultureInfo.CreateSpecificCulture("en-US");
-
         public static bool TryParse(string str, out double num)
         {
-            return double.TryParse(str, NumberStyles.Any, EngInfo, out num); // CultureInfo.InvariantCulture
+            return double.TryParse(str, NumberStyles.Any, Culture.EngInfo, out num); 
         }
     }
 }

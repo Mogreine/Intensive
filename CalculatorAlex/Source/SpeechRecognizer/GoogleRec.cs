@@ -76,15 +76,14 @@ namespace CalculatorAlex
                 {
                     Config = new RecognitionConfig()
                     {
-                        Encoding =
-                            RecognitionConfig.Types.AudioEncoding.Linear16,
+                        Encoding = RecognitionConfig.Types.AudioEncoding.Linear16,
                         SampleRateHertz = 16000,
                         LanguageCode = lang,
                         SpeechContexts =
                         {
                             new SpeechContext()
                             {
-                                Phrases = { "миллион", "миллиард", "разделить на", "делить на", "разделить", "умножить на", "умножить" }
+                                Phrases = { "миллион", "миллиард", "разделить на", "делить на", "разделить", "умножить на", "умножить", "twelve", "divide" }
                             }
 
                         }

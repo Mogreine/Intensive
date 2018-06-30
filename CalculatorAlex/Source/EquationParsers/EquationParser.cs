@@ -22,7 +22,7 @@ namespace CalculatorAlex
             {
                 for (var i = 1; i < parts.Length - 1; i += 2)
                 {
-                    var step = res.ToString(DoubleParser.EngInfo) + " " + parts[i] + " " + parts[i + 1] + " = ";
+                    var step = res.ToString(Culture.EngInfo) + " " + parts[i] + " " + parts[i + 1] + " = ";
                     double nextOperand;
                     if (DoubleParser.TryParse(parts[i + 1], out nextOperand))
                     {
@@ -37,7 +37,7 @@ namespace CalculatorAlex
                             res /= nextOperand;
                             res = Math.Round(res, 3);
                         }
-                        step += res.ToString(DoubleParser.EngInfo);
+                        step += res.ToString(Culture.EngInfo);
                         output.Add(step);
                     }
                     else
@@ -60,7 +60,7 @@ namespace CalculatorAlex
 
             if (output.Count == 0)
             {
-                output.Add(res.ToString(DoubleParser.EngInfo));
+                output.Add(res.ToString(Culture.EngInfo));
             }
             return output;
         }

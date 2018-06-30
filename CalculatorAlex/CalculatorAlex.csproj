@@ -186,6 +186,7 @@
     <Compile Include="Source\NumbersParser\DoubleParser.cs" />
     <Compile Include="Source\SpeechParsers\Converter.cs" />
     <Compile Include="Source\EquationParsers\EquationParser.cs" />
+    <Compile Include="Source\SpeechParsers\Culture.cs" />
     <Compile Include="Source\SpeechParsers\ReplaceableWords.cs" />
     <Compile Include="Source\SpeechRecognizer\GoogleRec.cs" />
     <Compile Include="Source\SpeechRecognizer\TextRecognizer.cs" />
