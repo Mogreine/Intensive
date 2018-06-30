@@ -9,7 +9,67 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
-            <Style x:Key="HideButton" TargetType="Button">
+
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+            <Grid>
+                <Border x:Name="Border" CornerRadius="2" Background="CornflowerBlue" BorderBrush="White" BorderThickness="1" />
+            </Grid>
+        </ControlTemplate>
+
+        <Style x:Key="{x:Type ComboBox}" TargetType="ComboBox">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton 
+                                Name="ToggleButton" 
+                                Template="{StaticResource ComboBoxToggleButton}" 
+                                Focusable="false"
+                                IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                ClickMode="Press">
+                            </ToggleButton>
+                            <ContentPresenter
+                                Name="ContentSite"
+                                IsHitTestVisible="False" 
+                                Content="{TemplateBinding SelectionBoxItem}"
+                                ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                Margin="9,3,23,3"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left" />
+                            <Popup 
+                                Name="Popup"
+                                Placement="Bottom"
+                                IsOpen="{TemplateBinding IsDropDownOpen}"
+                                AllowsTransparency="True" 
+                                Focusable="False"
+                                PopupAnimation="Slide">
+                                <Grid 
+                                  Name="DropDown"
+                                  SnapsToDevicePixels="True"                
+                                  MinWidth="{TemplateBinding ActualWidth}"
+                                  MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border 
+                                        x:Name="DropDownBorder"
+                                        Background="CornflowerBlue"
+                                        BorderThickness="1"
+                                        BorderBrush="White"/>
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="HideButton" TargetType="Button">
             <Setter Property="Width" Value="30"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -183,27 +243,27 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="SteelBlue" MouseDown="MoveEvent">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="0.26*"/>
                     <ColumnDefinition />
                     <ColumnDefinition Width="0.1*"/>
                     <ColumnDefinition Width="0.1*"/>
                     <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0" Height="35" Margin="10,0,0,0" Cursor="Hand" SelectionChanged="ComboBoxSelectionChanged"  >
-                    <ComboBoxItem IsSelected="True" Cursor="Hand">
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5" Height="20">
+                <ComboBox  Height="35" Margin="10,0,0,0" Cursor="Hand" FontSize="12" Foreground="White" SelectionChanged="ComboBoxSelectionChanged">
+                    <ComboBoxItem IsSelected="True" Cursor="Hand"> 
+                        <StackPanel Orientation="Horizontal" Height="25">
                             <Image Source="Resources/russian.png" Width="22"/>
-                            <TextBlock Text="Русский" Margin="7,0,0,0"/>
+                            <TextBlock Text="Русский" Margin="7,0,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                     </ComboBoxItem>
                     <ComboBoxItem Cursor="Hand">
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5" Height="20">
+                        <StackPanel Orientation="Horizontal" Height="25">
                             <Image Source="Resources/english.png" Width="22"/>
-                            <TextBlock Text="English" Margin="7,0,0,0"/>
+                            <TextBlock Text="English" Margin="7,0,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                     </ComboBoxItem>
                 </ComboBox>
-                <TextBlock Grid.Column="1" Text="Вычисления" Foreground="White" FontSize="26" Margin="70,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="Вычисления" Foreground="White" FontSize="26" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <Button x:Name="Hide" Style="{StaticResource HideButton}" Grid.Column="2" Click="HideButton" />
                 <Button x:Name="Full" Style="{StaticResource FullButton}" Grid.Column="3" Click="FullButton"/>
                 <Button x:Name="Close"  Style="{StaticResource CloseButton}" Grid.Column="4" Click="CloseButton"/>
