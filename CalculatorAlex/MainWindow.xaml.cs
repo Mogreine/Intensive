@@ -89,7 +89,11 @@ namespace CalculatorAlex
                 if (Char.IsDigit(res[0]))
                     res = res.Insert(0, lastResult + " + ");
                 else
+                {
+                    if (res.Length >= 2 && res[0] == '-' && Char.IsDigit(res[1]))
+                        res = res.Insert(1, " ");
                     res = res.Insert(0, lastResult + " ");
+                }
             }
 
             var equation = con.ConvertTextToEquation(res);
