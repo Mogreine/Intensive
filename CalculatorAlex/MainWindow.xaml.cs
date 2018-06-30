@@ -28,7 +28,7 @@ namespace CalculatorAlex
 
         public MainWindow()
         {
-            rec = new GoogleRec("ru-RU");
+            rec = new GoogleRec();
             InitializeComponent();
         }
         
@@ -37,7 +37,7 @@ namespace CalculatorAlex
             var brush = new ImageBrush();
             if (!clicked)
             {
-                await rec.Start();
+                await rec.Start("ru-RU");
                 brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro2.png", UriKind.Relative));
                 clicked = true;
             }
