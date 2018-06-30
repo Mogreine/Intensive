@@ -32,7 +32,7 @@ namespace CalculatorAlex
             rec = new GoogleRec();
             InitializeComponent();
         }
-        
+
         private async void RecordButton(object sender, RoutedEventArgs e)
         {
             var brush = new ImageBrush();
@@ -56,12 +56,12 @@ namespace CalculatorAlex
             lastResult = null;
             OutputCalculation.Text = "";
         }
-        
+
         private void HideButton(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         }
-        
+
         private void FullButton(object sender, RoutedEventArgs e)
         {
             if (this.WindowState == WindowState.Normal)
@@ -69,7 +69,7 @@ namespace CalculatorAlex
             else if (this.WindowState == WindowState.Maximized)
                 this.WindowState = WindowState.Normal;
         }
-        
+
         private void CloseButton(object sender, RoutedEventArgs e)
         {
             this.Close();
