@@ -17,6 +17,13 @@ namespace CalculatorAlex
         {
             var output = new List<string>();
             var parts = expression.Split(' ');
+
+            if (parts.Length <= 2)
+            {
+                output.Add("Выражение " + expression + " составлено неправильно.");
+                return output;
+            }
+
             double res;
             if (DoubleParser.TryParse(parts[0], out res))
             {
