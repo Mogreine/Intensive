@@ -266,6 +266,10 @@
     <Resource Include="Resources\english.png" />
     <Resource Include="Resources\russian.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cancel_blue.png" />
+    <Resource Include="Resources\cancel_white.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.CognitiveServices.Speech.0.4.0\build\net45\Microsoft.CognitiveServices.Speech.targets" Condition="Exists('..\packages\Microsoft.CognitiveServices.Speech.0.4.0\build\net45\Microsoft.CognitiveServices.Speech.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -10,11 +10,13 @@ namespace CalculatorAlex
     public class EquationParser
     {
 
-        public static bool HaveProblem;
-        public static double LastValue;
+        public static bool Success;
+        public static List<string> AllValues;
 
         public static List<string> Steps(string expression)
         {
+            Success = true;
+            AllValues = new List<string>();
             var output = new List<string>();
             var parts = expression.Split(' ');
             double res;
@@ -38,12 +40,14 @@ namespace CalculatorAlex
                             res = Math.Round(res, 3);
                         }
                         step += res.ToString(Culture.EngInfo);
+                        AllValues.Add(res.ToString(Culture.EngInfo));
                         output.Add(step);
                     }
                     else
                     {
+                        AllValues.Clear();
                         output.Clear();
-                        HaveProblem = true;
+                        Success = false;
                         output.Add("Выражение " + expression + " составлено неправильно.");
                         break;
                     }
@@ -51,15 +55,15 @@ namespace CalculatorAlex
             }
             else
             {
+                AllValues.Clear();
                 output.Clear();
-                HaveProblem = true;
+                Success = false;
                 output.Add("Выражение " + expression + " составлено неправильно.");
             }
 
-            LastValue = res;
-
             if (output.Count == 0)
             {
+                AllValues.Add(res.ToString(Culture.EngInfo));
                 output.Add(res.ToString(Culture.EngInfo));
             }
             return output;

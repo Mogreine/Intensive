@@ -232,6 +232,41 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="CancelButton" TargetType="Button">
+            <Setter Property="Height" Value="70"/>
+            <Setter Property="Width" Value="75"/>
+            <Setter Property="Margin" Value="0,10,0,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="Resources/cancel_white.png"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter x:Name="PART_Content"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="Resources/cancel_blue.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Image Source="Resources/background.jpg"/>
@@ -250,7 +285,7 @@
                     <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
                 <ComboBox x:Name="CombBoxLang" Height="35" Margin="10,0,0,0" Cursor="Hand" FontSize="12" Foreground="White" SelectionChanged="ComboBoxSelectionChanged">
-                    <ComboBoxItem IsSelected="True" Cursor="Hand"> 
+                    <ComboBoxItem IsSelected="True" Cursor="Hand">
                         <StackPanel Orientation="Horizontal" Height="25">
                             <Image Source="Resources/russian.png" Width="22"/>
                             <TextBlock Text="Русский" Margin="7,0,0,0" VerticalAlignment="Center"/>
@@ -272,14 +307,16 @@
             <ScrollViewer Grid.Row="1">
                 <TextBlock x:Name="OutputCalculation"  TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap"/>
             </ScrollViewer>
-            <Grid Grid.Row="2" Background="SteelBlue"> 
+            <Grid Grid.Row="2" Background="SteelBlue">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.33*"/>
                     <ColumnDefinition Width="0.33*"/>
+                    <ColumnDefinition Width="0.33*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Background="SteelBlue" Grid.ColumnSpan="2"/>
-                <Button x:Name="Record" Style="{StaticResource MicroButton}" Grid.Column="0" Click="RecordButton" Margin="106,5,106,0"/>
-                <Button x:Name="Clear" Style="{StaticResource ListButton}" Grid.Column="1" Click="ClearButton" Margin="106,5,106,0"/>
+                <Grid Background="SteelBlue" Grid.ColumnSpan="3"/>
+                <Button x:Name="Record" Style="{StaticResource MicroButton}" Grid.Column="0" Click="RecordButton" Margin="81,24,82,19" RenderTransformOrigin="1.254,0.45"/>
+                <Button x:Name="Calcel" Style="{StaticResource CancelButton}" Grid.Column="1" Click="CancelLastOperation" Margin="79,14,80,19" RenderTransformOrigin="0.004,0.415"/>
+                <Button x:Name="Clear" Style="{StaticResource ListButton}" Grid.Column="2" Click="ClearButton" Margin="81,24,82,19" RenderTransformOrigin="-0.975,1.189"/>
             </Grid>
         </Grid>
     </Grid>

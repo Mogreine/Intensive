@@ -24,11 +24,16 @@ namespace CalculatorAlex
     {
         private GoogleRec rec;
         private bool clicked;
-        private string lastResult;
+        private List<string> AllResults;
+        private List<string> CalculationHistory;
+        private bool IsLastOperationWrong;
         private string lang;
 
         public MainWindow()
         {
+            IsLastOperationWrong = false;
+            AllResults = new List<string>();
+            CalculationHistory = new List<string>();
             rec = new GoogleRec();
             InitializeComponent();
         }
@@ -40,6 +45,13 @@ namespace CalculatorAlex
             {
                 await rec.Start(lang);
                 brush.ImageSource = new BitmapImage(new Uri("Resources/micro2.png", UriKind.Relative));
+
+                if (IsLastOperationWrong)
+                {
+                    CalncelOperation(IsLastOperationWrong);
+                    IsLastOperationWrong = false;
+                }
+
                 clicked = true;
             }
             else
@@ -53,10 +65,102 @@ namespace CalculatorAlex
 
         private void ClearButton(object sender, RoutedEventArgs e)
         {
-            lastResult = null;
+            AllResults.Clear();
+            CalculationHistory.Clear();
+            IsLastOperationWrong = false;
             OutputCalculation.Text = "";
         }
 
+        private async void StopRecording()
+        {
+            var res = await rec.Stop();
+            var con = new Converter(lang);
+
+            if (res.Length == 0)
+            {
+                ChangeScreenText(new List<string> { "Ничего не удалось распознать\n" });
+                IsLastOperationWrong = true;
+                return;
+            }
+
+            if (AllResults.Count != 0)
+            {
+                if (Char.IsDigit(res[0]))
+                    res = res.Insert(0, AllResults[AllResults.Count - 1] + " + ");
+                else
+                {
+                    if (res.Length >= 2 && res[0] == '-' && Char.IsDigit(res[1]))
+                        res = res.Insert(1, " ");
+                    res = res.Insert(0, AllResults[AllResults.Count - 1] + " ");
+                }
+            }
+
+            var equation = con.ConvertTextToEquation(res);
+            var operations = EquationParser.Steps(equation);
+
+            IsLastOperationWrong = !EquationParser.Success;
+
+            ChangeScreenText(operations);
+            AllResults.AddRange(EquationParser.AllValues);
+        }
+
+        private void ComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (CombBoxLang.SelectedIndex)
+            {
+                case 0:
+                    lang = Culture.Ru;
+                    break;
+                case 1:
+                    lang = Culture.Eng;
+                    break;
+                default:
+                    lang = Culture.Ru;
+                    break;
+            }
+        }
+
+        private void CancelLastOperation(object sender, RoutedEventArgs e)
+        {
+            CalncelOperation(IsLastOperationWrong);
+        }
+
+        private void CalncelOperation(bool isError)
+        {
+            if (AllResults.Count == 0 && CalculationHistory.Count == 0) return;
+
+            if (!isError) AllResults.RemoveAt(AllResults.Count - 1);
+            CalculationHistory.RemoveAt(CalculationHistory.Count - 1);
+
+            ChangeScreenText();
+            IsLastOperationWrong = false;
+        }
+
+        private void ChangeScreenText()
+        {
+            var steps = new StringBuilder();
+
+            foreach (var op in CalculationHistory)
+            {
+                steps.AppendLine(op);
+            }
+
+            OutputCalculation.Text = steps.ToString();
+        }
+
+        private void ChangeScreenText(List<string> lastOperations)
+        {
+            var steps = new StringBuilder();
+
+            foreach (var op in lastOperations)
+            {
+                CalculationHistory.Add(op);
+                steps.AppendLine(op);
+            }
+
+            OutputCalculation.Text += steps.ToString();
+        }
+        
         private void HideButton(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
@@ -78,59 +182,6 @@ namespace CalculatorAlex
         private void MoveEvent(object sender, RoutedEventArgs e)
         {
             this.DragMove();
-        }
-
-        private async void StopRecording()
-        {
-            var res = await rec.Stop();
-            var con = new Converter(lang);
-
-            if (res.Length == 0)
-            {
-                OutputCalculation.Text += "Ничего не удалось распознать\n";
-                return;
-            }
-
-            if (lastResult != null)
-            {
-                if (Char.IsDigit(res[0]))
-                    res = res.Insert(0, lastResult + " + ");
-                else
-                {
-                    if (res.Length >= 2 && res[0] == '-' && Char.IsDigit(res[1]))
-                        res = res.Insert(1, " ");
-                    res = res.Insert(0, lastResult + " ");
-                }
-            }
-
-            var equation = con.ConvertTextToEquation(res);
-            var operations = EquationParser.Steps(equation);
-            var steps = new StringBuilder();
-
-            foreach (var op in operations)
-            {
-                steps.AppendLine(op);
-            }
-
-            lastResult = EquationParser.LastValue.ToString(Culture.EngInfo);
-
-            OutputCalculation.Text += steps;
-        }
-
-        private void ComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            switch (CombBoxLang.SelectedIndex)
-            {
-                case 0:
-                    lang = "ru-RU";
-                    break;
-                case 1:
-                    lang = "en-US";
-                    break;
-                default:
-                    lang = "ru-RU";
-                    break;
-            }
         }
     }
 }
