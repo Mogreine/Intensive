@@ -285,7 +285,7 @@
                     <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
                 <ComboBox x:Name="CombBoxLang" Height="35" Margin="10,0,0,0" Cursor="Hand" FontSize="12" Foreground="White" SelectionChanged="ComboBoxSelectionChanged">
-                    <ComboBoxItem IsSelected="True" Cursor="Hand"> 
+                    <ComboBoxItem IsSelected="True" Cursor="Hand">
                         <StackPanel Orientation="Horizontal" Height="25">
                             <Image Source="Resources/russian.png" Width="22"/>
                             <TextBlock Text="Русский" Margin="7,0,0,0" VerticalAlignment="Center"/>
@@ -307,7 +307,7 @@
             <ScrollViewer Grid.Row="1">
                 <TextBlock x:Name="OutputCalculation"  TextAlignment="Center" FontSize="25" Foreground="White" TextWrapping="Wrap"/>
             </ScrollViewer>
-            <Grid Grid.Row="2" Background="SteelBlue"> 
+            <Grid Grid.Row="2" Background="SteelBlue">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.33*"/>
                     <ColumnDefinition Width="0.33*"/>
@@ -315,7 +315,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid Background="SteelBlue" Grid.ColumnSpan="3"/>
                 <Button x:Name="Record" Style="{StaticResource MicroButton}" Grid.Column="0" Click="RecordButton" Margin="81,24,82,19" RenderTransformOrigin="1.254,0.45"/>
-                <Button x:Name="Calcel" Style="{StaticResource Cancel}" Grid.Column="1" Click="CancelLastOperation" Margin="79,19,80,19" RenderTransformOrigin="0.004,0.415"/>
+                <Button x:Name="Calcel" Style="{StaticResource Cancel}" Grid.Column="1" Click="CancelLastOperation" Margin="79,19,90,19" RenderTransformOrigin="0.004,0.415" Width="Auto"/>
                 <Button x:Name="Clear" Style="{StaticResource ListButton}" Grid.Column="2" Click="ClearButton" Margin="81,24,82,19" RenderTransformOrigin="-0.975,1.189"/>
             </Grid>
         </Grid>
