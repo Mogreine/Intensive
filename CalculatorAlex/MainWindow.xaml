@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
         mc:Ignorable="d"
         Title="Голосовой калькулятор" Height="450.697" Width="699.928"
         WindowStyle="None"
@@ -196,6 +197,15 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="Resources/micro1.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style x:Key="ListButton" TargetType="Button">
             <Setter Property="Height" Value="60"/>
@@ -267,6 +277,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    
     <Grid>
         <Image Source="Resources/background.jpg"/>
         <Grid>

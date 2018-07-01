@@ -59,7 +59,7 @@ namespace CalculatorAlex
                 brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro.png", UriKind.Relative));
                 clicked = false;
             }
-            Record.Background = brush;
+            Record.SetCurrentValue(Button.BackgroundProperty, brush);
         }
 
         private void ClearButton(object sender, RoutedEventArgs e)
