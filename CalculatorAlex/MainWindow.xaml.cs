@@ -26,10 +26,12 @@ namespace CalculatorAlex
         private bool clicked;
         private List<string> AllResults;
         private List<string> CalculationHistory;
+        private bool IsLastOperationWrong;
         private string lang;
 
         public MainWindow()
         {
+            IsLastOperationWrong = false;
             AllResults = new List<string>();
             CalculationHistory = new List<string>();
             rec = new GoogleRec();
@@ -42,6 +44,12 @@ namespace CalculatorAlex
             if (!clicked)
             {
                 await rec.Start(lang);
+                if (IsLastOperationWrong)
+                {
+                    CalncelOperation(IsLastOperationWrong);
+                    IsLastOperationWrong = false;
+                }
+
                 brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro2.png", UriKind.Relative));
                 clicked = true;
             }
@@ -57,30 +65,9 @@ namespace CalculatorAlex
         private void ClearButton(object sender, RoutedEventArgs e)
         {
             AllResults.Clear();
+            CalculationHistory.Clear();
+            IsLastOperationWrong = false;
             OutputCalculation.Text = "";
-        }
-
-        private void HideButton(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-
-        private void FullButton(object sender, RoutedEventArgs e)
-        {
-            if (this.WindowState == WindowState.Normal)
-                this.WindowState = WindowState.Maximized;
-            else if (this.WindowState == WindowState.Maximized)
-                this.WindowState = WindowState.Normal;
-        }
-
-        private void CloseButton(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void MoveEvent(object sender, RoutedEventArgs e)
-        {
-            this.DragMove();
         }
 
         private async void StopRecording()
@@ -90,7 +77,8 @@ namespace CalculatorAlex
 
             if (res.Length == 0)
             {
-                OutputCalculation.Text += "Ничего не удалось распознать\n";
+                ChangeScreenText(new List<string> { "Ничего не удалось распознать\n" });
+                IsLastOperationWrong = true;
                 return;
             }
 
@@ -109,6 +97,8 @@ namespace CalculatorAlex
             var equation = con.ConvertTextToEquation(res);
             var operations = EquationParser.Steps(equation);
 
+            IsLastOperationWrong = !EquationParser.Success;
+
             ChangeScreenText(operations);
             AllResults.AddRange(EquationParser.AllValues);
         }
@@ -118,22 +108,27 @@ namespace CalculatorAlex
             switch (CombBoxLang.SelectedIndex)
             {
                 case 0:
-                    lang = "ru-RU";
+                    lang = Culture.Ru;
                     break;
                 case 1:
-                    lang = "en-US";
+                    lang = Culture.Eng;
                     break;
                 default:
-                    lang = "ru-RU";
+                    lang = Culture.Ru;
                     break;
             }
         }
 
         private void CancelLastOperation(object sender, RoutedEventArgs e)
         {
-            if (AllResults.Count == 0) return;
+            CalncelOperation(false);
+        }
 
-            AllResults.RemoveAt(AllResults.Count - 1);
+        private void CalncelOperation(bool isError)
+        {
+            if (AllResults.Count == 0 && CalculationHistory.Count == 0) return;
+
+            if (!isError) AllResults.RemoveAt(AllResults.Count - 1);
             CalculationHistory.RemoveAt(CalculationHistory.Count - 1);
 
             ChangeScreenText();
@@ -162,6 +157,29 @@ namespace CalculatorAlex
             }
 
             OutputCalculation.Text += steps.ToString();
+        }
+        
+        private void HideButton(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void FullButton(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Normal)
+                this.WindowState = WindowState.Maximized;
+            else if (this.WindowState == WindowState.Maximized)
+                this.WindowState = WindowState.Normal;
+        }
+
+        private void CloseButton(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MoveEvent(object sender, RoutedEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }
