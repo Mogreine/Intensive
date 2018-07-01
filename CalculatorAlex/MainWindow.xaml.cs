@@ -121,7 +121,7 @@ namespace CalculatorAlex
 
         private void CancelLastOperation(object sender, RoutedEventArgs e)
         {
-            CalncelOperation(false);
+            CalncelOperation(IsLastOperationWrong);
         }
 
         private void CalncelOperation(bool isError)
@@ -132,6 +132,7 @@ namespace CalculatorAlex
             CalculationHistory.RemoveAt(CalculationHistory.Count - 1);
 
             ChangeScreenText();
+            IsLastOperationWrong = false;
         }
 
         private void ChangeScreenText()
