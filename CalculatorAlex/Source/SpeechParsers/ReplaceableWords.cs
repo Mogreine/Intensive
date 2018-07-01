@@ -30,6 +30,7 @@ namespace CalculatorAlex
 
         public static Dictionary<string, double> BigNumbRU = new Dictionary<string, double>
             {
+                {"один", 1},
                 {"млн", 1000000},
                 {"миллионов", 1000000},
                 {"миллион", 1000000},

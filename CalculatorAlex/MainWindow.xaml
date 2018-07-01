@@ -276,10 +276,12 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.33*"/>
                     <ColumnDefinition Width="0.33*"/>
+                    <ColumnDefinition Width="0.33*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Background="SteelBlue" Grid.ColumnSpan="2"/>
-                <Button x:Name="Record" Style="{StaticResource MicroButton}" Grid.Column="0" Click="RecordButton" Margin="106,5,106,0"/>
-                <Button x:Name="Clear" Style="{StaticResource ListButton}" Grid.Column="1" Click="ClearButton" Margin="106,5,106,0"/>
+                <Grid Background="SteelBlue" Grid.ColumnSpan="3"/>
+                <Button x:Name="Record" Style="{StaticResource MicroButton}" Grid.Column="0" Click="RecordButton" Margin="77,24,86,19"/>
+                <Button x:Name="Calcel"  Grid.Column="1" Click="CancelLastOperation" Margin="77,24,86,19"/>
+                <Button x:Name="Clear" Style="{StaticResource ListButton}" Grid.Column="2" Click="ClearButton" Margin="91,24,72,19"/>
             </Grid>
         </Grid>
     </Grid>

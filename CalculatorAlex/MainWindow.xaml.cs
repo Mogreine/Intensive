@@ -24,11 +24,14 @@ namespace CalculatorAlex
     {
         private GoogleRec rec;
         private bool clicked;
-        private string lastResult;
+        private List<string> AllResults;
+        private List<string> CalculationHistory;
         private string lang;
 
         public MainWindow()
         {
+            AllResults = new List<string>();
+            CalculationHistory = new List<string>();
             rec = new GoogleRec();
             InitializeComponent();
         }
@@ -53,7 +56,7 @@ namespace CalculatorAlex
 
         private void ClearButton(object sender, RoutedEventArgs e)
         {
-            lastResult = null;
+            AllResults.Clear();
             OutputCalculation.Text = "";
         }
 
@@ -91,30 +94,23 @@ namespace CalculatorAlex
                 return;
             }
 
-            if (lastResult != null)
+            if (AllResults.Count != 0)
             {
                 if (Char.IsDigit(res[0]))
-                    res = res.Insert(0, lastResult + " + ");
+                    res = res.Insert(0, AllResults[AllResults.Count - 1] + " + ");
                 else
                 {
                     if (res.Length >= 2 && res[0] == '-' && Char.IsDigit(res[1]))
                         res = res.Insert(1, " ");
-                    res = res.Insert(0, lastResult + " ");
+                    res = res.Insert(0, AllResults[AllResults.Count - 1] + " ");
                 }
             }
 
             var equation = con.ConvertTextToEquation(res);
             var operations = EquationParser.Steps(equation);
-            var steps = new StringBuilder();
 
-            foreach (var op in operations)
-            {
-                steps.AppendLine(op);
-            }
-
-            lastResult = EquationParser.LastValue.ToString(Culture.EngInfo);
-
-            OutputCalculation.Text += steps;
+            ChangeScreenText(operations);
+            AllResults.AddRange(EquationParser.AllValues);
         }
 
         private void ComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -131,6 +127,41 @@ namespace CalculatorAlex
                     lang = "ru-RU";
                     break;
             }
+        }
+
+        private void CancelLastOperation(object sender, RoutedEventArgs e)
+        {
+            if (AllResults.Count == 0) return;
+
+            AllResults.RemoveAt(AllResults.Count - 1);
+            CalculationHistory.RemoveAt(CalculationHistory.Count - 1);
+
+            ChangeScreenText();
+        }
+
+        private void ChangeScreenText()
+        {
+            var steps = new StringBuilder();
+
+            foreach (var op in CalculationHistory)
+            {
+                steps.AppendLine(op);
+            }
+
+            OutputCalculation.Text = steps.ToString();
+        }
+
+        private void ChangeScreenText(List<string> lastOperations)
+        {
+            var steps = new StringBuilder();
+
+            foreach (var op in lastOperations)
+            {
+                CalculationHistory.Add(op);
+                steps.AppendLine(op);
+            }
+
+            OutputCalculation.Text += steps.ToString();
         }
     }
 }
