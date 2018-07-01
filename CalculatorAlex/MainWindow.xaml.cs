@@ -39,13 +39,13 @@ namespace CalculatorAlex
             if (!clicked)
             {
                 await rec.Start(lang);
-                brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro2.png", UriKind.Relative));
+                brush.ImageSource = new BitmapImage(new Uri("Resources/micro2.png", UriKind.Relative));
                 clicked = true;
             }
             else
             {
                 StopRecording();
-                brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro.png", UriKind.Relative));
+                brush.ImageSource = new BitmapImage(new Uri("Resources/micro.png", UriKind.Relative));
                 clicked = false;
             }
             Record.Background = brush;

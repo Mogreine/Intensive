@@ -26,7 +26,7 @@ namespace CalculatorAlex
 
         public GoogleRec()
         {
-            var credential = GoogleCredential.FromFile(@"..\..\..\Resources\g.json").CreateScoped(SpeechClient.DefaultScopes);
+            var credential = GoogleCredential.FromFile(@"g.json").CreateScoped(SpeechClient.DefaultScopes);
             _channel = new Channel(SpeechClient.DefaultEndpoint.ToString(), credential.ToChannelCredentials());
             
             WriteLock = new object();
