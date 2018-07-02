@@ -36,6 +36,14 @@ namespace CalculatorAlex
                             res *= nextOperand;
                         else
                         {
+                            if (nextOperand == 0)
+                            {
+                                AllValues.Clear();
+                                output.Clear();
+                                Success = false;
+                                output.Add("Выражение " + expression + " составлено неправильно.");
+                                break;
+                            }
                             res /= nextOperand;
                             res = Math.Round(res, 3);
                         }
