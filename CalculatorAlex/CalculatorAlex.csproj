@@ -128,10 +128,6 @@
       <HintPath>..\packages\Grpc.Core.1.12.0\lib\net45\Grpc.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CognitiveServices.Speech.csharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=d2e6dcccb609e663, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CognitiveServices.Speech.0.4.0\lib\net45\Microsoft.CognitiveServices.Speech.csharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="NAudio, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.8.4\lib\net35\NAudio.dll</HintPath>
       <Private>True</Private>
@@ -189,7 +185,6 @@
     <Compile Include="Source\SpeechParsers\Culture.cs" />
     <Compile Include="Source\SpeechParsers\ReplaceableWords.cs" />
     <Compile Include="Source\SpeechRecognizer\GoogleRec.cs" />
-    <Compile Include="Source\SpeechRecognizer\TextRecognizer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -271,12 +266,10 @@
     <Resource Include="Resources\cancel_white.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Microsoft.CognitiveServices.Speech.0.4.0\build\net45\Microsoft.CognitiveServices.Speech.targets" Condition="Exists('..\packages\Microsoft.CognitiveServices.Speech.0.4.0\build\net45\Microsoft.CognitiveServices.Speech.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.CognitiveServices.Speech.0.4.0\build\net45\Microsoft.CognitiveServices.Speech.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CognitiveServices.Speech.0.4.0\build\net45\Microsoft.CognitiveServices.Speech.targets'))" />
     <Error Condition="!Exists('..\packages\Grpc.Core.1.12.0\build\net45\Grpc.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Core.1.12.0\build\net45\Grpc.Core.targets'))" />
   </Target>
   <Import Project="..\packages\Grpc.Core.1.12.0\build\net45\Grpc.Core.targets" Condition="Exists('..\packages\Grpc.Core.1.12.0\build\net45\Grpc.Core.targets')" />
