@@ -16,12 +16,12 @@ namespace CalculatorAlex
             switch (lang)
             {
                 case Culture.Ru:
-                    _operationsDict = ReplaceableWords.OperationsRU;
-                    _bigNumberDict = ReplaceableWords.BigNumbRU;
+                    _operationsDict = ReplaceableWords.OperationsRu;
+                    _bigNumberDict = ReplaceableWords.BigNumbRu;
                     break;
                 case Culture.Eng:
-                    _operationsDict = ReplaceableWords.OperationsEN;
-                    _bigNumberDict = ReplaceableWords.BigNumbEN;
+                    _operationsDict = ReplaceableWords.OperationsEn;
+                    _bigNumberDict = ReplaceableWords.BigNumbEn;
                     break;
             }
 

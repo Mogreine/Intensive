@@ -184,7 +184,7 @@
     <Compile Include="Source\EquationParsers\EquationParser.cs" />
     <Compile Include="Source\SpeechParsers\Culture.cs" />
     <Compile Include="Source\SpeechParsers\ReplaceableWords.cs" />
-    <Compile Include="Source\SpeechRecognizer\GoogleRec.cs" />
+    <Compile Include="Source\SpeechRecognizer\GoogleRecognizer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

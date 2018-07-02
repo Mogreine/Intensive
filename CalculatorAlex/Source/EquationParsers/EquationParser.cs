@@ -13,7 +13,7 @@ namespace CalculatorAlex
         public static bool Success;
         public static List<string> AllValues;
 
-        static void Error(List<string> output, string expression)
+        private static void Error(List<string> output, string expression)
         {
             AllValues.Clear();
             output.Clear();
