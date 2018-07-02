@@ -9,7 +9,7 @@ namespace CalculatorAlex
     class ReplaceableWords
     {
         public static Dictionary<string, string> OperationsRU = new Dictionary<string, string>
-            {
+        {
                 {"x", "*" },
                 {"х", "*" },
                 {"плюс-минус ", "+ -" },
@@ -28,10 +28,10 @@ namespace CalculatorAlex
                 {"ноль", "0"},
                 {"нуль", "0"},
                 {",", "."}
-            };
+        };
 
         public static Dictionary<string, double> BigNumbRU = new Dictionary<string, double>
-            {
+        {
                 {"один", 1},
                 {"млн", 1000000},
                 {"миллионов", 1000000},
@@ -41,10 +41,10 @@ namespace CalculatorAlex
                 {"миллиарда", 1000000000},
                 {"миллиардов", 1000000000},
                 {"млрд", 1000000000}
-            };
+        };
 
         public static Dictionary<string, string> OperationsEN = new Dictionary<string, string>
-            {
+        {
                 {"x", "*" },
                 {"х", "*" },
                 {"free", "3" },
@@ -54,12 +54,12 @@ namespace CalculatorAlex
                 {"divide", "/"},
                 {"multiply", "*"},
                 {",", "."}
-            };
+        };
 
         public static Dictionary<string, double> BigNumbEN = new Dictionary<string, double>
-            {
+        {
                 {"million", 1000000},
                 {"billion", 1000000000}
-            };
+        };
     }
 }

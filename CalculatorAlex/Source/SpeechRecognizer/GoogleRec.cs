@@ -41,7 +41,7 @@ namespace CalculatorAlex
             lock (WriteLock) WriteMore = true;
 
             StreamingCall = speech.StreamingRecognize();
-            await StreamingCall.WriteAsync(ConfigRequest(lang));
+            await StreamingCall.WriteAsync(RequestConfiguration(lang));
 
             WaveIn.StartRecording();
             Console.WriteLine("Speak now.");
@@ -68,7 +68,7 @@ namespace CalculatorAlex
             return textResult;
         }
 
-        private StreamingRecognizeRequest ConfigRequest(string lang)
+        private StreamingRecognizeRequest RequestConfiguration(string lang)
         {
             return new StreamingRecognizeRequest()
             {
