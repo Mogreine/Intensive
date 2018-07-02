@@ -13,6 +13,14 @@ namespace CalculatorAlex
         public static bool Success;
         public static List<string> AllValues;
 
+        static void Error(List<string> output, string expression)
+        {
+            AllValues.Clear();
+            output.Clear();
+            Success = false;
+            output.Add("Выражение " + expression + " составлено неправильно.");
+        }
+
         public static List<string> Steps(string expression)
         {
             Success = true;
@@ -38,10 +46,7 @@ namespace CalculatorAlex
                         {
                             if (nextOperand == 0)
                             {
-                                AllValues.Clear();
-                                output.Clear();
-                                Success = false;
-                                output.Add("Выражение " + expression + " составлено неправильно.");
+                                Error(output, expression);
                                 break;
                             }
                             res /= nextOperand;
@@ -53,20 +58,14 @@ namespace CalculatorAlex
                     }
                     else
                     {
-                        AllValues.Clear();
-                        output.Clear();
-                        Success = false;
-                        output.Add("Выражение " + expression + " составлено неправильно.");
+                        Error(output, expression);
                         break;
                     }
                 }
             }
             else
             {
-                AllValues.Clear();
-                output.Clear();
-                Success = false;
-                output.Add("Выражение " + expression + " составлено неправильно.");
+                Error(output, expression);
             }
 
             if (output.Count == 0)
