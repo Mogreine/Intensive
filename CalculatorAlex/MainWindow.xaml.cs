@@ -43,10 +43,20 @@ namespace CalculatorAlex
             var brush = new ImageBrush();
             if (!_сlicked)
             {
-                await _recognizer.Start(_lang);
+                try
+                {
+                    await _recognizer.Start(_lang);
+                }
+                catch (Grpc.Core.RpcException)
+                {
+                    ChangeScreenText(new List<string> { "Ошибка соединения\n" });
+                    _isLastOperationWrong = true;
+                    return;
+                }
+
                 if (_isLastOperationWrong)
                 {
-                    CalncelOperation(_isLastOperationWrong);
+                    CancelOperation(_isLastOperationWrong);
                     _isLastOperationWrong = false;
                 }
 
@@ -74,7 +84,19 @@ namespace CalculatorAlex
 
         private async void StopRecording()
         {
-            var res = await _recognizer.Stop();
+            var res = "";
+
+            try
+            {
+                res = await _recognizer.Stop();
+            }
+            catch (Grpc.Core.RpcException)
+            {
+                ChangeScreenText(new List<string> { "Ошибка соединения\n" });
+                _isLastOperationWrong = true;
+                return;
+            }
+
             var con = new Converter(_lang);
 
             if (res.Length == 0)
@@ -123,14 +145,14 @@ namespace CalculatorAlex
 
         private void CancelLastOperation(object sender, RoutedEventArgs e)
         {
-            CalncelOperation(_isLastOperationWrong);
+            CancelOperation(_isLastOperationWrong);
         }
 
-        private void CalncelOperation(bool isError)
+        private void CancelOperation(bool isError)
         {
             if (_allResults.Count == 0 && _calculationHistory.Count == 0) return;
 
-            if (!isError) _allResults.RemoveAt(_allResults.Count - 1);
+            if (!isError && _allResults.Count != 0) _allResults.RemoveAt(_allResults.Count - 1);
             _calculationHistory.RemoveAt(_calculationHistory.Count - 1);
 
             ChangeScreenText();

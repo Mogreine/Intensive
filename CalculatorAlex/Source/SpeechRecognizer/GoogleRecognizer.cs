@@ -116,8 +116,5 @@ namespace CalculatorAlex
                     }
                 };
         }
-
-        
-
     }
 }
