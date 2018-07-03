@@ -84,6 +84,8 @@ namespace CalculatorAlex
                 return;
             }
 
+            var equation = con.PreConvertation(res);
+
             if (_allResults.Count != 0)
             {
                 if (Char.IsDigit(res[0]))
@@ -96,7 +98,7 @@ namespace CalculatorAlex
                 }
             }
 
-            var equation = con.ConvertTextToEquation(res);
+            equation = con.ConvertTextToEquation(res);
             var operations = EquationParser.Steps(equation);
 
             _isLastOperationWrong = !EquationParser.Success;

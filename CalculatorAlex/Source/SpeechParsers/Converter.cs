@@ -71,12 +71,17 @@ namespace CalculatorAlex
             return sb.ToString().Trim(' ');
         }
 
-        public string ConvertTextToEquation(string str)
+        public string PreConvertation(string str)
         {
             str = str.ToLower();
             foreach (var pair in _operationsDict)
                 str = str.Replace(pair.Key, pair.Value);
             str = TransformBigNumbers(str);
+            return str;
+        }
+
+        public string ConvertTextToEquation(string str)
+        {
             var symbols = str.ToCharArray();
             var flag = false;
             for (var i = 0; i < symbols.Length; ++i)
