@@ -25,6 +25,7 @@ namespace CalculatorAlex
         private bool _сlicked;
         private string _lang;
         private bool _isLastOperationWrong;
+        private bool _mayComeIn;
         private readonly List<string> _allResults;
         private readonly List<string> _calculationHistory;
         private readonly GoogleRecognizer _recognizer;
@@ -39,6 +40,7 @@ namespace CalculatorAlex
 
             _isErrorCheckingAlive = false;
             _isLastOperationWrong = false;
+            _mayComeIn = true;
             _allResults = new List<string>();
             _calculationHistory = new List<string>();
             _errorEvent = new AutoResetEvent(false);
@@ -48,6 +50,9 @@ namespace CalculatorAlex
 
         private async void RecordButton(object sender, RoutedEventArgs e)
         {
+            if (!_mayComeIn)
+                return;
+            _mayComeIn = false;
             var brush = new ImageBrush();
             if (!_сlicked)
             {
@@ -100,6 +105,7 @@ namespace CalculatorAlex
                 Record.ClearValue(Button.BackgroundProperty);
                 Record.SetCurrentValue(Button.BackgroundProperty, brush);
             }
+            _mayComeIn = true;
         }
 
         private void ClearButton(object sender, RoutedEventArgs e)
