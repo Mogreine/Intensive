@@ -24,13 +24,14 @@ namespace CalculatorAlex
         private WaveInEvent _waveIn;
         private SpeechClient.StreamingRecognizeStream _streamingCall;
 
+        public event EventHandler OnError;
+
         public GoogleRecognizer()
         {
             var credential = GoogleCredential.FromFile(@"..\..\..\Resources\g.json").CreateScoped(SpeechClient.DefaultScopes);
             _channel = new Channel(SpeechClient.DefaultEndpoint.ToString(), credential.ToChannelCredentials());
             
             _writeLock = new object();
-
             NAudioConfiguration();
         }
 
@@ -106,13 +107,21 @@ namespace CalculatorAlex
                 {
                     lock (_writeLock)
                     {
-                        if (!_writeMore) return;
-                        _streamingCall.WriteAsync(
-                            new StreamingRecognizeRequest()
-                            {
-                                AudioContent = Google.Protobuf.ByteString
-                                    .CopyFrom(args.Buffer, 0, args.BytesRecorded)
-                            }).Wait();
+                        try
+                        {
+                            if (!_writeMore) return;
+                            _streamingCall.WriteAsync(
+                                new StreamingRecognizeRequest()
+                                {
+                                    AudioContent = Google.Protobuf.ByteString
+                                        .CopyFrom(args.Buffer, 0, args.BytesRecorded)
+                                }).Wait();
+                        }
+                        catch (System.AggregateException)
+                        {
+                            OnError(new object(), new EventArgs());
+                        }
+                        
                     }
                 };
         }

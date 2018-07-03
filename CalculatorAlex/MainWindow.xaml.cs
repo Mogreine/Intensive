@@ -35,7 +35,15 @@ namespace CalculatorAlex
             _allResults = new List<string>();
             _calculationHistory = new List<string>();
             _recognizer = new GoogleRecognizer();
+            _recognizer.OnError += _recognizer_OnError;
             InitializeComponent();
+        }
+
+        private void _recognizer_OnError(object sender, EventArgs e)
+        {
+            StopRecording();
+            //ChangeScreenText(new List<string> { "Ошибка соединения\n" });
+            _isLastOperationWrong = true;
         }
 
         private async void RecordButton(object sender, RoutedEventArgs e)
@@ -180,7 +188,6 @@ namespace CalculatorAlex
                 _calculationHistory.Add(op);
                 steps.AppendLine(op);
             }
-
             OutputCalculation.Text += steps.ToString();
         }
         
