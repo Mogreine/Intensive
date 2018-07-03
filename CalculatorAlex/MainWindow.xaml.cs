@@ -84,7 +84,7 @@ namespace CalculatorAlex
                 return;
             }
 
-            var equation = con.PreConvertation(res);
+            res = con.PreConvertation(res);
 
             if (_allResults.Count != 0)
             {
@@ -98,7 +98,7 @@ namespace CalculatorAlex
                 }
             }
 
-            equation = con.ConvertTextToEquation(res);
+            var equation = con.ConvertTextToEquation(res);
             var operations = EquationParser.Steps(equation);
 
             _isLastOperationWrong = !EquationParser.Success;
