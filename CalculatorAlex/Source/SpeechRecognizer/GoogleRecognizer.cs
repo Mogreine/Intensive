@@ -24,13 +24,15 @@ namespace CalculatorAlex
         private WaveInEvent _waveIn;
         private SpeechClient.StreamingRecognizeStream _streamingCall;
 
-        public event EventHandler OnError;
+        private AutoResetEvent _error;
 
-        public GoogleRecognizer()
+        public GoogleRecognizer(AutoResetEvent error)
         {
             var credential = GoogleCredential.FromFile(@"..\..\..\Resources\g.json").CreateScoped(SpeechClient.DefaultScopes);
             _channel = new Channel(SpeechClient.DefaultEndpoint.ToString(), credential.ToChannelCredentials());
-            
+
+            _error = error;
+
             _writeLock = new object();
             NAudioConfiguration();
         }
@@ -117,9 +119,9 @@ namespace CalculatorAlex
                                         .CopyFrom(args.Buffer, 0, args.BytesRecorded)
                                 }).Wait();
                         }
-                        catch (System.AggregateException)
+                        catch (AggregateException)
                         {
-                            OnError(new object(), new EventArgs());
+                            _error.Set();
                         }
                         
                     }

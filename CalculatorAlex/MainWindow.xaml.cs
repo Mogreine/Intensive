@@ -28,22 +28,22 @@ namespace CalculatorAlex
         private readonly List<string> _allResults;
         private readonly List<string> _calculationHistory;
         private readonly GoogleRecognizer _recognizer;
+        private readonly AutoResetEvent _errorEvent;
+        
+        private bool _isErrorCheckingAlive;
+
+        private Task _waitingErrorTask;
 
         public MainWindow()
         {
+
+            _isErrorCheckingAlive = false;
             _isLastOperationWrong = false;
             _allResults = new List<string>();
             _calculationHistory = new List<string>();
-            _recognizer = new GoogleRecognizer();
-            _recognizer.OnError += _recognizer_OnError;
+            _errorEvent = new AutoResetEvent(false);
+            _recognizer = new GoogleRecognizer(_errorEvent);
             InitializeComponent();
-        }
-
-        private void _recognizer_OnError(object sender, EventArgs e)
-        {
-            StopRecording();
-            //ChangeScreenText(new List<string> { "Ошибка соединения\n" });
-            _isLastOperationWrong = true;
         }
 
         private async void RecordButton(object sender, RoutedEventArgs e)
@@ -53,11 +53,22 @@ namespace CalculatorAlex
             {
                 try
                 {
+                    if (!_isErrorCheckingAlive)
+                    {
+                        _isErrorCheckingAlive = true;
+                        _waitingErrorTask = Task.Run(() =>
+                        {
+                            _errorEvent.WaitOne();
+                            _errorEvent.Reset();
+                        });
+                        WaitError();
+                    }
+
                     await _recognizer.Start(_lang);
                 }
                 catch (Grpc.Core.RpcException)
                 {
-                    ChangeScreenText(new List<string> { "Ошибка соединения\n" });
+                    ChangeScreenText(new List<string> { "Ошибка соединения!" });
                     _isLastOperationWrong = true;
                     return;
                 }
@@ -74,7 +85,16 @@ namespace CalculatorAlex
             }
             else
             {
-                StopRecording();
+                try
+                {
+                    await StopRecording();
+                }
+                catch (Grpc.Core.RpcException)
+                {
+                    ChangeScreenText(new List<string> { "Ошибка соединения!" });
+                    _isLastOperationWrong = true;
+                }
+
                 brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro.png", UriKind.Relative));
                 _сlicked = false;
                 Record.ClearValue(Button.BackgroundProperty);
@@ -90,26 +110,16 @@ namespace CalculatorAlex
             OutputCalculation.Text = "";
         }
 
-        private async void StopRecording()
+        private async Task StopRecording()
         {
             var res = "";
-
-            try
-            {
-                res = await _recognizer.Stop();
-            }
-            catch (Grpc.Core.RpcException)
-            {
-                ChangeScreenText(new List<string> { "Ошибка соединения\n" });
-                _isLastOperationWrong = true;
-                return;
-            }
+            res = await _recognizer.Stop();
 
             var con = new Converter(_lang);
 
             if (res.Length == 0)
             {
-                ChangeScreenText(new List<string> { "Ничего не удалось распознать\n" });
+                ChangeScreenText(new List<string> { "Ничего не удалось распознать!" });
                 _isLastOperationWrong = true;
                 return;
             }
@@ -133,6 +143,13 @@ namespace CalculatorAlex
 
             ChangeScreenText(operations);
             _allResults.AddRange(EquationParser.AllValues);
+        }
+
+        private async void WaitError()
+        {
+            await _waitingErrorTask;
+            RecordButton(Record, new RoutedEventArgs());
+            _isErrorCheckingAlive = false;
         }
 
         private void ComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
