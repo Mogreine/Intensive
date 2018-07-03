@@ -126,7 +126,7 @@ namespace CalculatorAlex
 
             if (_allResults.Count != 0)
             {
-                if (Char.IsDigit(res[0]))
+                if (Char.IsDigit(res[0]) || Char.IsLetter(res[0]))
                     res = res.Insert(0, _allResults[_allResults.Count - 1] + " + ");
                 else
                 {
