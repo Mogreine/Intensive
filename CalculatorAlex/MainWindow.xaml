@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
         mc:Ignorable="d"
         Title="Голосовой калькулятор" Height="450.697" Width="699.928"
         WindowStyle="None"
