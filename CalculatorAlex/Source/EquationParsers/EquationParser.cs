@@ -28,7 +28,9 @@ namespace CalculatorAlex
             var output = new List<string>();
             var parts = expression.Split(' ');
 
-            if (parts.Length == 2)
+            double lastWordTest;
+
+            if (parts.Length == 2 || !DoubleParser.TryParse(parts[parts.Length - 1], out lastWordTest))
             {
                 Error(output, expression);
                 return output;
@@ -49,7 +51,7 @@ namespace CalculatorAlex
                             res -= nextOperand;
                         else if (parts[i] == "*")
                             res *= nextOperand;
-                        else
+                        else if (parts[i] == "/")
                         {
                             if (nextOperand == 0)
                             {
@@ -58,6 +60,11 @@ namespace CalculatorAlex
                             }
                             res /= nextOperand;
                             res = Math.Round(res, 3);
+                        }
+                        else
+                        {
+                            Error(output, expression);
+                            break;
                         }
                         step += res.ToString(Culture.EngInfo);
                         AllValues.Add(res.ToString(Culture.EngInfo));
