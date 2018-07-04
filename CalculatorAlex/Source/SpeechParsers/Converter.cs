@@ -71,11 +71,35 @@ namespace CalculatorAlex
             return sb.ToString().Trim(' ');
         }
 
+        private string AddingSpaces(string str)
+        {
+            string strOut = "";
+            for (int i = 0; i < str.Length; ++i)
+            {
+                if (str[i] == '/' || str[i] == '*')
+                {
+                    if (i - 1 >= 0 && str[i - 1] != ' ')
+                    {
+                        strOut += ' ';
+                    }
+                    strOut += str[i];
+                    if (i + 1 < str.Length && str[i + 1] != ' ')
+                    {
+                        strOut += ' ';
+                    }
+                    continue;
+                }
+                strOut += str[i];
+            }
+            return strOut;
+        }
+
         public string PreConvertation(string str)
         {
             str = str.ToLower();
             foreach (var pair in _operationsDict)
                 str = str.Replace(pair.Key, pair.Value);
+            str = AddingSpaces(str);
             str = TransformBigNumbers(str);
             return str;
         }
