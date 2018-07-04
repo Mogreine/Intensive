@@ -75,6 +75,7 @@ namespace CalculatorAlex
                 {
                     ChangeScreenText(new List<string> { "Ошибка соединения!" });
                     _isLastOperationWrong = true;
+                    _mayComeIn = true;
                     return;
                 }
 
