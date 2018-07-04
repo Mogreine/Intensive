@@ -84,11 +84,7 @@ namespace CalculatorAlex
                         LanguageCode = lang,
                         SpeechContexts =
                         {
-                            new SpeechContext()
-                            {
-                                Phrases = { "миллион", "миллиард", "разделить на", "делить на", "разделить", "умножить на", "умножить", "twelve", "divide", "three" }
-                            }
-
+                            (lang == Culture.Ru) ? ReplaceableWords.RussianContext : ReplaceableWords.EnglishContext
                         }
                     },
                     InterimResults = true,

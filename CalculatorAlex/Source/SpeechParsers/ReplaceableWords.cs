@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Cloud.Speech.V1;
 
 namespace CalculatorAlex
 {
@@ -60,6 +61,16 @@ namespace CalculatorAlex
         {
                 {"million", 1000000},
                 {"billion", 1000000000}
+        };
+
+        public static SpeechContext RussianContext = new SpeechContext
+        {
+            Phrases = { "миллион", "миллиард", "разделить на", "делить на", "разделить", "умножить на", "умножить" }
+        };
+
+        public static SpeechContext EnglishContext = new SpeechContext
+        {
+            Phrases = { "twelve", "divide", "three" }
         };
     }
 }
