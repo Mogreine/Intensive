@@ -124,6 +124,8 @@ namespace CalculatorAlex
                 return;
             }
 
+            res = con.PreConvertation(res);
+
             if (_allResults.Count != 0)
             {
                 if (Char.IsDigit(res[0]))
