@@ -21,10 +21,11 @@ namespace CalculatorAlex
         private bool _writeMore;
         private readonly object _writeLock;
         private readonly Channel _channel;
-        private readonly AutoResetEvent _error;
         private WaveInEvent _waveIn;
         private SpeechClient.StreamingRecognizeStream _streamingCall;
-        
+
+        private AutoResetEvent _error;
+
         public GoogleRecognizer(AutoResetEvent error)
         {
             var credential = GoogleCredential.FromFile(@"..\..\..\Resources\g.json").CreateScoped(SpeechClient.DefaultScopes);

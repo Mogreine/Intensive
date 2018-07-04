@@ -26,15 +26,18 @@ namespace CalculatorAlex
         private string _lang;
         private bool _isLastOperationWrong;
         private bool _mayComeIn;
-        private bool _isErrorCheckingAlive;
-        private Task _waitingErrorTask;
         private readonly List<string> _allResults;
         private readonly List<string> _calculationHistory;
         private readonly GoogleRecognizer _recognizer;
         private readonly AutoResetEvent _errorEvent;
+        
+        private bool _isErrorCheckingAlive;
+
+        private Task _waitingErrorTask;
 
         public MainWindow()
         {
+
             _isErrorCheckingAlive = false;
             _isLastOperationWrong = false;
             _mayComeIn = true;
