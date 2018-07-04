@@ -27,7 +27,7 @@ namespace CalculatorAlex
 
         }
 
-        private string TransformBigNumbers(string str)
+        public string TransformBigNumbers(string str)
         {
             var pieces = str.Split(' ').ToList();
             for (var i = 0; i < pieces.Count; ++i)
