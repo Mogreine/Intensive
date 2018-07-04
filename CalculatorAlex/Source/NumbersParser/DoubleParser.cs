@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CalculatorAlex
 {
-    public class DoubleParser
+    class DoubleParser
     {
         public static bool TryParse(string str, out double num)
         {
