@@ -47,5 +47,13 @@ namespace CalculatorTests
             var actual = false;
             Assert.AreEqual(excepted, actual);
         }
+
+        [TestMethod]
+        public void TryParseTest6()
+        {
+            DoubleParser.TryParse("3.5", out a);
+            var actual = 3.5;
+            Assert.AreEqual(a, actual);
+        }
     }
 }
