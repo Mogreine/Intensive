@@ -98,7 +98,7 @@ namespace CalculatorAlex
                     _isLastOperationWrong = true;
                 }
 
-                brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro.png", UriKind.Relative));
+                brush.ImageSource = new BitmapImage(new Uri("Resources/micro.png", UriKind.Relative));
                 _сlicked = false;
                 Record.ClearValue(Button.BackgroundProperty);
                 Record.SetCurrentValue(Button.BackgroundProperty, brush);
