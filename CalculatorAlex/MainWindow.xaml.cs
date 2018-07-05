@@ -22,86 +22,141 @@ namespace CalculatorAlex
     /// </summary>
     public partial class MainWindow : Window
     {
-        private GoogleRec rec;
-        private bool clicked;
-        private List<string> AllResults;
-        private List<string> CalculationHistory;
-        private bool IsLastOperationWrong;
-        private string lang;
+        private bool _сlicked;
+        private string _lang;
+        private bool _isLastOperationWrong;
+        private bool _mayComeIn;
+        private bool _isErrorCheckingAlive;
+        private Task _waitingErrorTask;
+        private readonly List<string> _allResults;
+        private readonly List<string> _calculationHistory;
+        private readonly GoogleRecognizer _recognizer;
+        private readonly AutoResetEvent _errorEvent;
 
         public MainWindow()
         {
-            IsLastOperationWrong = false;
-            AllResults = new List<string>();
-            CalculationHistory = new List<string>();
-            rec = new GoogleRec();
+            _isErrorCheckingAlive = false;
+            _isLastOperationWrong = false;
+            _mayComeIn = true;
+            _allResults = new List<string>();
+            _calculationHistory = new List<string>();
+            _errorEvent = new AutoResetEvent(false);
+            _recognizer = new GoogleRecognizer(_errorEvent);
             InitializeComponent();
         }
 
         private async void RecordButton(object sender, RoutedEventArgs e)
         {
+            if (!_mayComeIn)
+                return;
+            _mayComeIn = false;
             var brush = new ImageBrush();
-            if (!clicked)
+            if (!_сlicked)
             {
-                await rec.Start(lang);
-                brush.ImageSource = new BitmapImage(new Uri("Resources/micro2.png", UriKind.Relative));
-
-                if (IsLastOperationWrong)
+                try
                 {
-                    CalncelOperation(IsLastOperationWrong);
-                    IsLastOperationWrong = false;
+                    if (!_isErrorCheckingAlive)
+                    {
+                        _isErrorCheckingAlive = true;
+                        _waitingErrorTask = Task.Run(() =>
+                        {
+                            _errorEvent.WaitOne();
+                            _errorEvent.Reset();
+                        });
+                        WaitError();
+                    }
+
+                    await _recognizer.Start(_lang);
+                }
+                catch (Grpc.Core.RpcException)
+                {
+                    ChangeScreenText(new List<string> { "Ошибка соединения!" });
+                    _isLastOperationWrong = true;
+                    _mayComeIn = true;
+                    return;
                 }
 
-                clicked = true;
+                if (_isLastOperationWrong)
+                {
+                    CancelOperation(_isLastOperationWrong);
+                    _isLastOperationWrong = false;
+                }
+
+                brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro2.png", UriKind.Relative));
+                _сlicked = true;
+                Record.SetValue(Button.BackgroundProperty, brush);
             }
             else
             {
-                StopRecording();
-                brush.ImageSource = new BitmapImage(new Uri("Resources/micro.png", UriKind.Relative));
-                clicked = false;
+                try
+                {
+                    await StopRecording();
+                }
+                catch (Grpc.Core.RpcException)
+                {
+                    ChangeScreenText(new List<string> { "Ошибка соединения!" });
+                    _isLastOperationWrong = true;
+                }
+
+                brush.ImageSource = new BitmapImage(new Uri("../../../Resources/micro.png", UriKind.Relative));
+                _сlicked = false;
+                Record.ClearValue(Button.BackgroundProperty);
+                Record.SetCurrentValue(Button.BackgroundProperty, brush);
+
             }
-            Record.Background = brush;
+            _mayComeIn = true;
         }
 
         private void ClearButton(object sender, RoutedEventArgs e)
         {
-            AllResults.Clear();
-            CalculationHistory.Clear();
-            IsLastOperationWrong = false;
+            _allResults.Clear();
+            _calculationHistory.Clear();
+            _isLastOperationWrong = false;
             OutputCalculation.Text = "";
         }
 
-        private async void StopRecording()
+        private async Task StopRecording()
         {
-            var res = await rec.Stop();
-            var con = new Converter(lang);
+            var res = "";
+            res = await _recognizer.Stop();
+
+            var con = new Converter(_lang);
 
             if (res.Length == 0)
             {
-                ChangeScreenText(new List<string> { "Ничего не удалось распознать\n" });
-                IsLastOperationWrong = true;
+                ChangeScreenText(new List<string> { "Ничего не удалось распознать!" });
+                _isLastOperationWrong = true;
                 return;
             }
 
-            if (AllResults.Count != 0)
+            res = con.PreConvertation(res);
+
+            if (_allResults.Count != 0)
             {
                 if (Char.IsDigit(res[0]))
-                    res = res.Insert(0, AllResults[AllResults.Count - 1] + " + ");
+                    res = res.Insert(0, _allResults[_allResults.Count - 1] + " + ");
                 else
                 {
                     if (res.Length >= 2 && res[0] == '-' && Char.IsDigit(res[1]))
                         res = res.Insert(1, " ");
-                    res = res.Insert(0, AllResults[AllResults.Count - 1] + " ");
+                    res = res.Insert(0, _allResults[_allResults.Count - 1] + " ");
                 }
             }
 
             var equation = con.ConvertTextToEquation(res);
             var operations = EquationParser.Steps(equation);
 
-            IsLastOperationWrong = !EquationParser.Success;
+            _isLastOperationWrong = !EquationParser.Success;
 
             ChangeScreenText(operations);
-            AllResults.AddRange(EquationParser.AllValues);
+            _allResults.AddRange(EquationParser.AllValues);
+        }
+
+        private async void WaitError()
+        {
+            await _waitingErrorTask;
+            RecordButton(Record, new RoutedEventArgs());
+            _isErrorCheckingAlive = false;
         }
 
         private void ComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -109,38 +164,38 @@ namespace CalculatorAlex
             switch (CombBoxLang.SelectedIndex)
             {
                 case 0:
-                    lang = Culture.Ru;
+                    _lang = Culture.Ru;
                     break;
                 case 1:
-                    lang = Culture.Eng;
+                    _lang = Culture.Eng;
                     break;
                 default:
-                    lang = Culture.Ru;
+                    _lang = Culture.Ru;
                     break;
             }
         }
 
         private void CancelLastOperation(object sender, RoutedEventArgs e)
         {
-            CalncelOperation(IsLastOperationWrong);
+            CancelOperation(_isLastOperationWrong);
         }
 
-        private void CalncelOperation(bool isError)
+        private void CancelOperation(bool isError)
         {
-            if (AllResults.Count == 0 && CalculationHistory.Count == 0) return;
+            if (_allResults.Count == 0 && _calculationHistory.Count == 0) return;
 
-            if (!isError) AllResults.RemoveAt(AllResults.Count - 1);
-            CalculationHistory.RemoveAt(CalculationHistory.Count - 1);
+            if (!isError && _allResults.Count != 0) _allResults.RemoveAt(_allResults.Count - 1);
+            _calculationHistory.RemoveAt(_calculationHistory.Count - 1);
 
             ChangeScreenText();
-            IsLastOperationWrong = false;
+            _isLastOperationWrong = false;
         }
 
         private void ChangeScreenText()
         {
             var steps = new StringBuilder();
 
-            foreach (var op in CalculationHistory)
+            foreach (var op in _calculationHistory)
             {
                 steps.AppendLine(op);
             }
@@ -154,10 +209,9 @@ namespace CalculatorAlex
 
             foreach (var op in lastOperations)
             {
-                CalculationHistory.Add(op);
+                _calculationHistory.Add(op);
                 steps.AppendLine(op);
             }
-
             OutputCalculation.Text += steps.ToString();
         }
         

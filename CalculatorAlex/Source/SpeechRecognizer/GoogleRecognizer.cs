@@ -16,34 +16,36 @@ using System.Windows.Controls;
 
 namespace CalculatorAlex
 {
-    class GoogleRec
+    class GoogleRecognizer
     {
-        private bool WriteMore;
-        private object WriteLock;
+        private bool _writeMore;
+        private readonly object _writeLock;
         private readonly Channel _channel;
-        private WaveInEvent WaveIn;
-        private SpeechClient.StreamingRecognizeStream StreamingCall;
-
-        public GoogleRec()
+        private readonly AutoResetEvent _error;
+        private WaveInEvent _waveIn;
+        private SpeechClient.StreamingRecognizeStream _streamingCall;
+        
+        public GoogleRecognizer(AutoResetEvent error)
         {
             var credential = GoogleCredential.FromFile(@"g.json").CreateScoped(SpeechClient.DefaultScopes);
             _channel = new Channel(SpeechClient.DefaultEndpoint.ToString(), credential.ToChannelCredentials());
-            
-            WriteLock = new object();
 
+            _error = error;
+
+            _writeLock = new object();
             NAudioConfiguration();
         }
 
         public async Task Start(string lang)
         {
             var speech = SpeechClient.Create(_channel);
-            WriteMore = true;
-            lock (WriteLock) WriteMore = true;
+            _writeMore = true;
+            lock (_writeLock) _writeMore = true;
 
-            StreamingCall = speech.StreamingRecognize();
-            await StreamingCall.WriteAsync(ConfigRequest(lang));
+            _streamingCall = speech.StreamingRecognize();
+            await _streamingCall.WriteAsync(RequestConfiguration(lang));
 
-            WaveIn.StartRecording();
+            _waveIn.StartRecording();
             Console.WriteLine("Speak now.");
         }
 
@@ -52,23 +54,23 @@ namespace CalculatorAlex
             Task<string> printResponses = Task.Run(async () =>
             {
                 string res = "";
-                while (await StreamingCall.ResponseStream.MoveNext(
+                while (await _streamingCall.ResponseStream.MoveNext(
                     default(CancellationToken)))
                 {
-                    res = StreamingCall.ResponseStream.Current.Results.Last().Alternatives.Last().Transcript;
+                    res = _streamingCall.ResponseStream.Current.Results.Last().Alternatives.Last().Transcript;
                 }
                 return res;
             });
 
-            WaveIn.StopRecording();
-            lock (WriteLock) WriteMore = false;
-            await StreamingCall.WriteCompleteAsync();
+            _waveIn.StopRecording();
+            lock (_writeLock) _writeMore = false;
+            await _streamingCall.WriteCompleteAsync();
 
             var textResult = await printResponses;
             return textResult;
         }
 
-        private StreamingRecognizeRequest ConfigRequest(string lang)
+        private StreamingRecognizeRequest RequestConfiguration(string lang)
         {
             return new StreamingRecognizeRequest()
             {
@@ -81,11 +83,7 @@ namespace CalculatorAlex
                         LanguageCode = lang,
                         SpeechContexts =
                         {
-                            new SpeechContext()
-                            {
-                                Phrases = { "миллион", "миллиард", "разделить на", "делить на", "разделить", "умножить на", "умножить", "twelve", "divide" }
-                            }
-
+                            (lang == Culture.Ru) ? ReplaceableWords.RussianContext : ReplaceableWords.EnglishContext
                         }
                     },
                     InterimResults = true,
@@ -95,29 +93,34 @@ namespace CalculatorAlex
 
         private void NAudioConfiguration()
         {
-            WaveIn = new WaveInEvent
+            _waveIn = new WaveInEvent
             {
                 DeviceNumber = 0,
                 WaveFormat = new WaveFormat(16000, 1)
             };
 
-            WaveIn.DataAvailable +=
+            _waveIn.DataAvailable +=
                 (sender, args) =>
                 {
-                    lock (WriteLock)
+                    lock (_writeLock)
                     {
-                        if (!WriteMore) return;
-                        StreamingCall.WriteAsync(
-                            new StreamingRecognizeRequest()
-                            {
-                                AudioContent = Google.Protobuf.ByteString
-                                    .CopyFrom(args.Buffer, 0, args.BytesRecorded)
-                            }).Wait();
+                        try
+                        {
+                            if (!_writeMore) return;
+                            _streamingCall.WriteAsync(
+                                new StreamingRecognizeRequest()
+                                {
+                                    AudioContent = Google.Protobuf.ByteString
+                                        .CopyFrom(args.Buffer, 0, args.BytesRecorded)
+                                }).Wait();
+                        }
+                        catch (AggregateException)
+                        {
+                            _error.Set();
+                        }
+                        
                     }
                 };
         }
-
-        
-
     }
 }

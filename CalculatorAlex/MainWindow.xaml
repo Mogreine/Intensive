@@ -196,6 +196,15 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="Resources/micro1.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style x:Key="ListButton" TargetType="Button">
             <Setter Property="Height" Value="60"/>
@@ -233,9 +242,8 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="CancelButton" TargetType="Button">
-            <Setter Property="Height" Value="70"/>
-            <Setter Property="Width" Value="75"/>
-            <Setter Property="Margin" Value="0,10,0,10"/>
+            <Setter Property="Height" Value="68"/>
+            <Setter Property="Width" Value="70"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Background">
@@ -268,6 +276,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    
     <Grid>
         <Image Source="Resources/background.jpg"/>
         <Grid>
@@ -315,7 +324,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid Background="SteelBlue" Grid.ColumnSpan="3"/>
                 <Button x:Name="Record" Style="{StaticResource MicroButton}" Grid.Column="0" Click="RecordButton" Margin="81,24,82,19" RenderTransformOrigin="1.254,0.45"/>
-                <Button x:Name="Calcel" Style="{StaticResource CancelButton}" Grid.Column="1" Click="CancelLastOperation" Margin="79,14,80,19" RenderTransformOrigin="0.004,0.415"/>
+                <Button x:Name="Cancel" Style="{StaticResource CancelButton}" Grid.Column="1" Click="CancelLastOperation" Margin="79,14,80,19" RenderTransformOrigin="0.004,0.415"/>
                 <Button x:Name="Clear" Style="{StaticResource ListButton}" Grid.Column="2" Click="ClearButton" Margin="81,24,82,19" RenderTransformOrigin="-0.975,1.189"/>
             </Grid>
         </Grid>

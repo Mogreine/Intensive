@@ -16,12 +16,12 @@ namespace CalculatorAlex
             switch (lang)
             {
                 case Culture.Ru:
-                    _operationsDict = ReplaceableWords.OperationsRU;
-                    _bigNumberDict = ReplaceableWords.BigNumbRU;
+                    _operationsDict = ReplaceableWords.OperationsRu;
+                    _bigNumberDict = ReplaceableWords.BigNumbRu;
                     break;
                 case Culture.Eng:
-                    _operationsDict = ReplaceableWords.OperationsEN;
-                    _bigNumberDict = ReplaceableWords.BigNumbEN;
+                    _operationsDict = ReplaceableWords.OperationsEn;
+                    _bigNumberDict = ReplaceableWords.BigNumbEn;
                     break;
             }
 
@@ -71,12 +71,41 @@ namespace CalculatorAlex
             return sb.ToString().Trim(' ');
         }
 
-        public string ConvertTextToEquation(string str)
+        private string AddingSpaces(string str)
+        {
+            string strOut = "";
+            for (int i = 0; i < str.Length; ++i)
+            {
+                if (str[i] == '/' || str[i] == '*')
+                {
+                    if (i - 1 >= 0 && str[i - 1] != ' ')
+                    {
+                        strOut += ' ';
+                    }
+                    strOut += str[i];
+                    if (i + 1 < str.Length && str[i + 1] != ' ')
+                    {
+                        strOut += ' ';
+                    }
+                    continue;
+                }
+                strOut += str[i];
+            }
+            return strOut;
+        }
+
+        public string PreConvertation(string str)
         {
             str = str.ToLower();
             foreach (var pair in _operationsDict)
                 str = str.Replace(pair.Key, pair.Value);
+            str = AddingSpaces(str);
             str = TransformBigNumbers(str);
+            return str;
+        }
+
+        public string ConvertTextToEquation(string str)
+        {
             var symbols = str.ToCharArray();
             var flag = false;
             for (var i = 0; i < symbols.Length; ++i)
@@ -105,6 +134,4 @@ namespace CalculatorAlex
         }
 
     }
-
-
 }
